@@ -5,8 +5,8 @@ import * as sinonChai from "sinon-chai";
 import { render, screen, fireEvent } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import React from 'react';
-import { StoreProvider } from '../../../store/react/StoreContext';
-import MenuPage from '../../../components-react/Popup/MenuPage';
+import { StoreProvider } from '../../../store/StoreContext';
+import MenuPage from '../../../components/popup/MenuPage';
 
 const should = chai.should();
 chai.use(sinonChai);

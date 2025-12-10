@@ -4,7 +4,7 @@ import * as sinon from "sinon";
 import * as sinonChai from "sinon-chai";
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import PasswordPrompt from '../../../components-react/Popup/PasswordPrompt';
+import PasswordPrompt from '../../../components/popup/PasswordPrompt';
 
 const should = chai.should();
 chai.use(sinonChai.default || sinonChai);

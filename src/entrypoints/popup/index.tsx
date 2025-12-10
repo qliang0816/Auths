@@ -1,8 +1,11 @@
 import ReactDOM from 'react-dom/client';
 import React from 'react';
 import './style.css';
-import { StoreProvider } from '@/store/react/StoreContext';
-import Popup from '@/components-react/Popup/Popup';
+import '@/assets/styles/popup.scss';
+import '@/components/popup/NewComponents.css';
+import '@/components/popup/SecurityComponents.css';
+import { StoreProvider } from '@/store/StoreContext';
+import Popup from '@/components/popup/Popup';
 
 // Create root element and render the app
 const root = document.getElementById('root');

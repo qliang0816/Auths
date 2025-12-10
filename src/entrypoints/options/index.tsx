@@ -1,8 +1,8 @@
 import ReactDOM from 'react-dom/client';
 import React from 'react';
 import './style.css';
-import { StoreProvider } from '@/store/react/StoreContext';
-import Options from '@/components-react/Options/Options';
+import { StoreProvider } from '@/store/StoreContext';
+import Options from '@/components/options/Options';
 
 const root = document.getElementById('root');
 

@@ -18,5 +18,8 @@ declare module '#imports' {
   export { InvalidMatchPattern, MatchPattern } from 'wxt/utils/match-patterns';
   export { useState, useCallback, useMemo, useEffect, useRef, useContext, useReducer } from 'react';
   export { fakeBrowser } from 'wxt/testing';
+  export { Options, Import, Permissions } from '../src/components/index';
+  export { ButtonInput, TextInput, SelectInput, ToggleInput, FileInput, ButtonLink } from '../src/components/common/index';
+  export { Popup, MainHeader, MainBody, MenuPage, PageHandler, NotificationHandler, EntryComponent } from '../src/components/Popup/index';
   export { decryptBackupData, getEntryDataFromOTPAuthPerLine, getCachedSecrets } from '../src/utils/import';
 }

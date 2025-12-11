@@ -4,8 +4,8 @@ node_modules/
 # Build output
 build/
 dist/
-.output/          # WXT build output
-.wxt/             # WXT cache and generated types
+.output/
+.wxt/
 chrome/
 firefox/
 edge/

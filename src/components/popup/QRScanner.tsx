@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import jsQR from 'jsqr';
 import { useAccounts } from '../../store';
 import { useI18n } from '../../i18n';
@@ -43,15 +43,30 @@ const LoadingIcon = () => (
 interface QRScannerProps {
   onClose: () => void;
   onSuccess: () => void;
+  initialMode?: 'scan' | 'upload';
 }
 
-export default function QRScanner({ onClose, onSuccess }: QRScannerProps) {
+export default function QRScanner({ onClose, onSuccess, initialMode }: QRScannerProps) {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { dispatch } = useAccounts();
   const { t } = useI18n();
+  const hasTriggeredInitialMode = useRef(false);
+
+  // Auto-trigger based on initial mode
+  useEffect(() => {
+    if (hasTriggeredInitialMode.current) return;
+    hasTriggeredInitialMode.current = true;
+
+    if (initialMode === 'scan') {
+      // Delay slightly to ensure component is fully mounted
+      setTimeout(() => handleRegionSelect(), 100);
+    } else if (initialMode === 'upload') {
+      setTimeout(() => fileInputRef.current?.click(), 100);
+    }
+  }, [initialMode]);
 
   const parseOtpAuthUrl = (url: string) => {
     // Check if it's an otpauth URL

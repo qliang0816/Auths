@@ -3,6 +3,7 @@ import { useAccounts, useStyle } from '../../store';
 import { useI18n } from '../../i18n';
 import EntryComponent from './EntryComponent';
 import AddAccountForm from './AddAccountForm';
+import AddMethodSelector, { AddMethod } from './AddMethodSelector';
 import QRScanner from './QRScanner';
 
 // SVG Icons
@@ -55,8 +56,10 @@ export default function MainBody() {
   const { style, dispatch: styleDispatch } = useStyle();
   const { t } = useI18n();
   const [searchText, setSearchText] = useState('');
+  const [showMethodSelector, setShowMethodSelector] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
   const [showQRScanner, setShowQRScanner] = useState(false);
+  const [scannerMode, setScannerMode] = useState<'scan' | 'upload'>('scan');
   const containerRef = useRef<HTMLDivElement>(null);
 
   const filteredEntries = entries?.filter((entry: OTPEntryInterface) => {
@@ -111,13 +114,22 @@ export default function MainBody() {
   };
 
   const handleAddAccountSuccess = () => {
+    setShowMethodSelector(false);
     setShowAddForm(false);
     setShowQRScanner(false);
   };
 
-  const handleOpenQRScanner = () => {
-    setShowAddForm(false);
-    setShowQRScanner(true);
+  const handleMethodSelect = (method: AddMethod) => {
+    setShowMethodSelector(false);
+    if (method === 'scan') {
+      setScannerMode('scan');
+      setShowQRScanner(true);
+    } else if (method === 'upload') {
+      setScannerMode('upload');
+      setShowQRScanner(true);
+    } else {
+      setShowAddForm(true);
+    }
   };
 
   const handleToggleEdit = () => {
@@ -208,12 +220,24 @@ export default function MainBody() {
       {!style.isEditing && (
         <button
           className="add-account-fab"
-          onClick={() => setShowAddForm(true)}
+          onClick={() => setShowMethodSelector(true)}
           title={t('add_account')}
           aria-label={t('add_account')}
         >
           <PlusIcon />
         </button>
+      )}
+
+      {/* Add Method Selector Modal */}
+      {showMethodSelector && (
+        <div className="modal-overlay" onClick={() => setShowMethodSelector(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <AddMethodSelector
+              onClose={() => setShowMethodSelector(false)}
+              onSelect={handleMethodSelect}
+            />
+          </div>
+        </div>
       )}
 
       {/* Add Account Form Modal */}
@@ -222,7 +246,6 @@ export default function MainBody() {
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <AddAccountForm
               onClose={() => setShowAddForm(false)}
-              onScanQR={handleOpenQRScanner}
             />
           </div>
         </div>
@@ -235,6 +258,7 @@ export default function MainBody() {
             <QRScanner
               onClose={() => setShowQRScanner(false)}
               onSuccess={handleAddAccountSuccess}
+              initialMode={scannerMode}
             />
           </div>
         </div>

@@ -9,24 +9,11 @@ const CloseIcon = () => (
   </svg>
 );
 
-const QRCodeIcon = () => (
-  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
-    <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
-    <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
-    <rect x="14" y="14" width="3" height="3" fill="currentColor"/>
-    <rect x="18" y="14" width="3" height="3" fill="currentColor"/>
-    <rect x="14" y="18" width="3" height="3" fill="currentColor"/>
-    <rect x="18" y="18" width="3" height="3" fill="currentColor"/>
-  </svg>
-);
-
 interface AddAccountFormProps {
   onClose: () => void;
-  onScanQR: () => void;
 }
 
-export default function AddAccountForm({ onClose, onScanQR }: AddAccountFormProps) {
+export default function AddAccountForm({ onClose }: AddAccountFormProps) {
   const [issuer, setIssuer] = useState('');
   const [account, setAccount] = useState('');
   const [secret, setSecret] = useState('');
@@ -150,9 +137,8 @@ export default function AddAccountForm({ onClose, onScanQR }: AddAccountFormProp
         {error && <div className="error-message">{error}</div>}
 
         <div className="form-actions">
-          <button type="button" className="btn-secondary" onClick={onScanQR}>
-            <QRCodeIcon />
-            {t('scan_qr_code')}
+          <button type="button" className="btn-secondary" onClick={onClose}>
+            {t('close')}
           </button>
           <button type="submit" className="btn-primary">
             {t('add')}

@@ -20,4 +20,18 @@ export default defineBackground(() => {
       console.log('Autofill command triggered');
     }
   });
+
+  // Handle messages from content scripts and popup
+  chrome.runtime.onMessage.addListener((message, _sender, sendResponse) => {
+    if (message.action === 'captureVisibleTab') {
+      chrome.tabs.captureVisibleTab(undefined, { format: 'png' })
+        .then((dataUrl) => {
+          sendResponse({ dataUrl });
+        })
+        .catch((error) => {
+          sendResponse({ error: error.message });
+        });
+      return true; // Will respond asynchronously
+    }
+  });
 });

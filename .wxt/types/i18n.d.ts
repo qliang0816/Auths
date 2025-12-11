@@ -105,7 +105,7 @@ declare module "wxt/browser" {
     /**
      * Added Account.
      *
-     * " has been added."
+     * "已添加。"
      */
     getMessage(
       messageName: "added",
@@ -115,7 +115,7 @@ declare module "wxt/browser" {
     /**
      * QR Error.
      *
-     * "Unrecognized QR code."
+     * "无法识别的QR码。"
      */
     getMessage(
       messageName: "errorqr",
@@ -125,7 +125,7 @@ declare module "wxt/browser" {
     /**
      * Secret Error.
      *
-     * "Invalid account secret"
+     * "无效的密钥"
      */
     getMessage(
       messageName: "errorsecret",
@@ -135,7 +135,7 @@ declare module "wxt/browser" {
     /**
      * Add account.
      *
-     * "Add account"
+     * "添加账号"
      */
     getMessage(
       messageName: "add_code",
@@ -145,7 +145,7 @@ declare module "wxt/browser" {
     /**
      * Scan QR Code.
      *
-     * "Scan QR Code"
+     * "扫描QR码"
      */
     getMessage(
       messageName: "add_qr",
@@ -155,7 +155,7 @@ declare module "wxt/browser" {
     /**
      * Manual Entry.
      *
-     * "Manual Entry"
+     * "手动输入"
      */
     getMessage(
       messageName: "add_secret",
@@ -165,7 +165,7 @@ declare module "wxt/browser" {
     /**
      * Import migration data failed.
      *
-     * "Import failed. If you are migrating data from Google Authenticator, please re-export your data from Google Authenticator and try again."
+     * "导入失败。 如果您要从Google Authenticator迁移数据，请从Google Authenticator重新导出数据，然后重试。"
      */
     getMessage(
       messageName: "migration_fail",
@@ -175,7 +175,7 @@ declare module "wxt/browser" {
     /**
      * Some migration data is broken.
      *
-     * "Some account data was not imported successfully."
+     * "某些帐户数据未成功导入。"
      */
     getMessage(
       messageName: "migration_partly_fail",
@@ -185,7 +185,7 @@ declare module "wxt/browser" {
     /**
      * Close.
      *
-     * "Close"
+     * "关闭"
      */
     getMessage(
       messageName: "close",
@@ -195,7 +195,7 @@ declare module "wxt/browser" {
     /**
      * OK.
      *
-     * "Ok"
+     * "确定"
      */
     getMessage(
       messageName: "ok",
@@ -205,7 +205,7 @@ declare module "wxt/browser" {
     /**
      * Yes.
      *
-     * "Yes"
+     * "是"
      */
     getMessage(
       messageName: "yes",
@@ -215,7 +215,7 @@ declare module "wxt/browser" {
     /**
      * No.
      *
-     * "No"
+     * "否"
      */
     getMessage(
       messageName: "no",
@@ -225,7 +225,7 @@ declare module "wxt/browser" {
     /**
      * Account.
      *
-     * "Account"
+     * "账户"
      */
     getMessage(
       messageName: "account",
@@ -235,7 +235,7 @@ declare module "wxt/browser" {
     /**
      * Account Name.
      *
-     * "Username"
+     * "用户名"
      */
     getMessage(
       messageName: "accountName",
@@ -245,7 +245,7 @@ declare module "wxt/browser" {
     /**
      * Issuer.
      *
-     * "Issuer"
+     * "签发方"
      */
     getMessage(
       messageName: "issuer",
@@ -255,7 +255,7 @@ declare module "wxt/browser" {
     /**
      * Secret.
      *
-     * "Secret"
+     * "密钥"
      */
     getMessage(
       messageName: "secret",
@@ -265,7 +265,7 @@ declare module "wxt/browser" {
     /**
      * Update Success.
      *
-     * "Success."
+     * "成功。"
      */
     getMessage(
       messageName: "updateSuccess",
@@ -275,7 +275,7 @@ declare module "wxt/browser" {
     /**
      * Update Failure.
      *
-     * "Failure."
+     * "失败。"
      */
     getMessage(
       messageName: "updateFailure",
@@ -285,7 +285,7 @@ declare module "wxt/browser" {
     /**
      * About.
      *
-     * "About"
+     * "关于"
      */
     getMessage(
       messageName: "about",
@@ -295,7 +295,7 @@ declare module "wxt/browser" {
     /**
      * Settings.
      *
-     * "Settings"
+     * "设置"
      */
     getMessage(
       messageName: "settings",
@@ -305,7 +305,7 @@ declare module "wxt/browser" {
     /**
      * Security.
      *
-     * "Security"
+     * "安全"
      */
     getMessage(
       messageName: "security",
@@ -315,7 +315,7 @@ declare module "wxt/browser" {
     /**
      * Current Passphrase.
      *
-     * "Current Password"
+     * "当前密码"
      */
     getMessage(
       messageName: "current_phrase",
@@ -325,7 +325,7 @@ declare module "wxt/browser" {
     /**
      * New Passphrase.
      *
-     * "New Password"
+     * "新密码"
      */
     getMessage(
       messageName: "new_phrase",
@@ -335,7 +335,7 @@ declare module "wxt/browser" {
     /**
      * Passphrase.
      *
-     * "Password"
+     * "密码"
      */
     getMessage(
       messageName: "phrase",
@@ -345,7 +345,7 @@ declare module "wxt/browser" {
     /**
      * Confirm Passphrase.
      *
-     * "Confirm Password"
+     * "确认密码"
      */
     getMessage(
       messageName: "confirm_phrase",
@@ -355,7 +355,7 @@ declare module "wxt/browser" {
     /**
      * Remove entry confirmation
      *
-     * "Are you sure you want to delete this account? This action cannot be undone."
+     * "您确定要删除此密钥吗？该操作无法撤销。"
      */
     getMessage(
       messageName: "confirm_delete",
@@ -365,7 +365,7 @@ declare module "wxt/browser" {
     /**
      * Message that user is required to acknowledge before clearing all data.
      *
-     * "I understand that all of my data will be irrecoverably deleted."
+     * "我明白所有数据都将被删除且不可恢复。"
      */
     getMessage(
       messageName: "confirm_delete_all",
@@ -373,7 +373,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Reset Authenticator"
+     * "重置身份验证器"
      */
     getMessage(
       messageName: "delete_all",
@@ -381,7 +381,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "This will delete all of your data and completely reset Authenticator. You will not be able to recover any deleted data! You should consider saving a backup before resetting Authenticator."
+     * "这将删除所有数据并完全重置身份验证器。 任何已删除的数据都无法恢复！在重置身份验证器之前您应保存备份。"
      */
     getMessage(
       messageName: "delete_all_warning",
@@ -391,7 +391,7 @@ declare module "wxt/browser" {
     /**
      * Passphrase Warning.
      *
-     * "This password will be used to encrypt your accounts. No one can help you if you forget the password."
+     * "您的账户数据将使用此密码进行加密。如果您忘记了密码没有人能够提供帮助。"
      */
     getMessage(
       messageName: "security_warning",
@@ -401,7 +401,7 @@ declare module "wxt/browser" {
     /**
      * Update.
      *
-     * "Update"
+     * "更新"
      */
     getMessage(
       messageName: "update",
@@ -411,7 +411,7 @@ declare module "wxt/browser" {
     /**
      * Passphrase Incorrect.
      *
-     * "You cannot add a new account until all accounts are decrypted. Please enter the correct password before continuing."
+     * "部分账户与密码不匹配，您无法添加新账户或者更改密码。请提供正确的密码后重试。"
      */
     getMessage(
       messageName: "phrase_incorrect",
@@ -421,7 +421,7 @@ declare module "wxt/browser" {
     /**
      * Skip Unable-decripted Data.
      *
-     * "Accounts that were not able to be decrypted will not be included in this backup."
+     * "备份文件不会包含无法解密的账号。"
      */
     getMessage(
       messageName: "phrase_incorrect_export",
@@ -431,7 +431,7 @@ declare module "wxt/browser" {
     /**
      * Passphrase Not Match.
      *
-     * "Password does not match."
+     * "密码不匹配。"
      */
     getMessage(
       messageName: "phrase_not_match",
@@ -441,7 +441,7 @@ declare module "wxt/browser" {
     /**
      * Encrypted.
      *
-     * "Encrypted"
+     * "已加密"
      */
     getMessage(
       messageName: "encrypted",
@@ -451,7 +451,7 @@ declare module "wxt/browser" {
     /**
      * Copied.
      *
-     * "Copied"
+     * "已复制"
      */
     getMessage(
       messageName: "copied",
@@ -461,7 +461,7 @@ declare module "wxt/browser" {
     /**
      * Feedback.
      *
-     * "Feedback"
+     * "问题反馈"
      */
     getMessage(
       messageName: "feedback",
@@ -471,7 +471,7 @@ declare module "wxt/browser" {
     /**
      * Translate.
      *
-     * "Translate"
+     * "参与翻译"
      */
     getMessage(
       messageName: "translate",
@@ -481,7 +481,7 @@ declare module "wxt/browser" {
     /**
      * Source Code.
      *
-     * "Source Code"
+     * "源代码"
      */
     getMessage(
       messageName: "source",
@@ -491,7 +491,7 @@ declare module "wxt/browser" {
     /**
      * Passphrase Info
      *
-     * "Enter password to decrypt account data."
+     * "输入密码以解码账户数据。"
      */
     getMessage(
       messageName: "passphrase_info",
@@ -501,7 +501,7 @@ declare module "wxt/browser" {
     /**
      * Sync Clock
      *
-     * "Sync Clock with Google"
+     * "通过Google校准时间"
      */
     getMessage(
       messageName: "sync_clock",
@@ -511,7 +511,7 @@ declare module "wxt/browser" {
     /**
      * Remember Passphrase
      *
-     * "Remember Password"
+     * "记住密码"
      */
     getMessage(
       messageName: "remember_phrase",
@@ -521,7 +521,7 @@ declare module "wxt/browser" {
     /**
      * Local Time is Too Far Off
      *
-     * "Caution! Your local clock is too far off, please fix it before continuing."
+     * "注意！您的本地时钟时间差过大，请修正后再进行操作。"
      */
     getMessage(
       messageName: "clock_too_far_off",
@@ -531,7 +531,7 @@ declare module "wxt/browser" {
     /**
      * Remind Backup
      *
-     * "Do you have a backup for your accounts? Don't wait until it's too late!"
+     * "您是否为账户数据创建了备份？不要等到为时已晚。"
      */
     getMessage(
       messageName: "remind_backup",
@@ -541,7 +541,7 @@ declare module "wxt/browser" {
     /**
      * Capture Failed
      *
-     * "Capture failed, please reload the page and try again."
+     * "捕捉失败，请重载您正在浏览的页面后重试。"
      */
     getMessage(
       messageName: "capture_failed",
@@ -551,7 +551,7 @@ declare module "wxt/browser" {
     /**
      * Import QR image backup instead of scan local image
      *
-     * "Are you trying to scan QR code from a local file? Use Import QR Image Backup instead."
+     * "您是否正在尝试从本地文件扫描QR码？ 改为使用导入QR图像备份。"
      */
     getMessage(
       messageName: "capture_local_file_failed",
@@ -561,7 +561,7 @@ declare module "wxt/browser" {
     /**
      * Time Based
      *
-     * "Time Based"
+     * "基于时间"
      */
     getMessage(
       messageName: "based_on_time",
@@ -571,7 +571,7 @@ declare module "wxt/browser" {
     /**
      * Counter Based
      *
-     * "Counter Based"
+     * "基于计数器"
      */
     getMessage(
       messageName: "based_on_counter",
@@ -581,7 +581,7 @@ declare module "wxt/browser" {
     /**
      * Popup Page Settings
      *
-     * "Preferences"
+     * "偏好"
      */
     getMessage(
       messageName: "resize_popup_page",
@@ -591,7 +591,7 @@ declare module "wxt/browser" {
     /**
      * Scale
      *
-     * "Scale"
+     * "比例"
      */
     getMessage(
       messageName: "scale",
@@ -601,7 +601,7 @@ declare module "wxt/browser" {
     /**
      * Export menu info text
      *
-     * "Warning: all backups are unencrypted. Want to add an account to another app? Hover over the top right part of any account and hit the hidden button."
+     * "警告：所有备份均未加密。想要将账号添加至其他应用？请点击账号右上角隐藏的图标。"
      */
     getMessage(
       messageName: "export_info",
@@ -611,7 +611,7 @@ declare module "wxt/browser" {
     /**
      * Download backup file.
      *
-     * "Download Backup File"
+     * "下载备份文件"
      */
     getMessage(
       messageName: "download_backup",
@@ -621,7 +621,7 @@ declare module "wxt/browser" {
     /**
      * Import backup.
      *
-     * "Import Backup"
+     * "导入备份"
      */
     getMessage(
       messageName: "import_backup",
@@ -631,7 +631,7 @@ declare module "wxt/browser" {
     /**
      * Import backup file.
      *
-     * "Import Backup File"
+     * "导入备份文件"
      */
     getMessage(
       messageName: "import_backup_file",
@@ -641,7 +641,7 @@ declare module "wxt/browser" {
     /**
      * Import qr image backup.
      *
-     * "Import QR Image Backup"
+     * "导入 QR 图片备份"
      */
     getMessage(
       messageName: "import_backup_qr",
@@ -651,7 +651,7 @@ declare module "wxt/browser" {
     /**
      * Import qr images. Shown as add account method.
      *
-     * "Import QR Images"
+     * "导入QR码图片"
      */
     getMessage(
       messageName: "import_qr_images",
@@ -661,7 +661,7 @@ declare module "wxt/browser" {
     /**
      * Import backup code.
      *
-     * "Import Text Backup"
+     * "导入备份文本"
      */
     getMessage(
       messageName: "import_backup_code",
@@ -671,7 +671,7 @@ declare module "wxt/browser" {
     /**
      * Import OTP URLs. Shown as add account method.
      *
-     * "Import OTP URLs"
+     * "导入OTP链接"
      */
     getMessage(
       messageName: "import_otp_urls",
@@ -681,7 +681,7 @@ declare module "wxt/browser" {
     /**
      * Import successful, but some QR image cannot be recognized.
      *
-     * "Import successful, but some QR codes could not be recognized."
+     * "导入成功，但部分二维码无法识别。"
      */
     getMessage(
       messageName: "import_backup_qr_partly_failed",
@@ -691,7 +691,7 @@ declare module "wxt/browser" {
     /**
      * You can select multiple image files to import backup in batches.
      *
-     * "You can select multiple files to import backup in batches."
+     * "您可以同时选择多个文件进行批量导入"
      */
     getMessage(
       messageName: "import_backup_qr_in_batches",
@@ -701,7 +701,7 @@ declare module "wxt/browser" {
     /**
      * Show all entries.
      *
-     * "Show all entries"
+     * "显示全部条目"
      */
     getMessage(
       messageName: "show_all_entries",
@@ -711,7 +711,7 @@ declare module "wxt/browser" {
     /**
      * Backup risk warning.
      *
-     * "Warning: backups are unencrypted. Use at your own risk."
+     * "警告：备份未加密，您需自担风险。"
      */
     getMessage(
       messageName: "dropbox_risk",
@@ -721,7 +721,7 @@ declare module "wxt/browser" {
     /**
      * Error password warning when import backups.
      *
-     * "You must provide correct password to import backups."
+     * "您必须提供正确的密码才能导入备份。"
      */
     getMessage(
       messageName: "import_error_password",
@@ -731,7 +731,7 @@ declare module "wxt/browser" {
     /**
      * localStorage password warning.
      *
-     * "Your password is stored locally, please change it in the security menu immediately."
+     * "您的密码保存在了本地，请立即通过安全菜单更改密码。"
      */
     getMessage(
       messageName: "local_passphrase_warning",
@@ -741,7 +741,7 @@ declare module "wxt/browser" {
     /**
      * Remove password.
      *
-     * "Remove"
+     * "移除"
      */
     getMessage(
       messageName: "remove",
@@ -751,7 +751,7 @@ declare module "wxt/browser" {
     /**
      * Download Encrypted Backup
      *
-     * "Download Password-Protected Backup"
+     * "下载加密备份"
      */
     getMessage(
       messageName: "download_enc_backup",
@@ -761,7 +761,7 @@ declare module "wxt/browser" {
     /**
      * Search
      *
-     * "Search"
+     * "搜索"
      */
     getMessage(
       messageName: "search",
@@ -771,7 +771,7 @@ declare module "wxt/browser" {
     /**
      * Make window turn into persistent popup
      *
-     * "Popup mode"
+     * "独立窗口模式"
      */
     getMessage(
       messageName: "popout",
@@ -781,7 +781,7 @@ declare module "wxt/browser" {
     /**
      * Lock accounts
      *
-     * "Lock"
+     * "锁定"
      */
     getMessage(
       messageName: "lock",
@@ -791,7 +791,7 @@ declare module "wxt/browser" {
     /**
      * Edit
      *
-     * "Edit"
+     * "编辑"
      */
     getMessage(
       messageName: "edit",
@@ -801,7 +801,7 @@ declare module "wxt/browser" {
     /**
      * Manual backup
      *
-     * "Manual Backup"
+     * "手动备份"
      */
     getMessage(
       messageName: "manual_dropbox",
@@ -811,7 +811,7 @@ declare module "wxt/browser" {
     /**
      * Use Autofill
      *
-     * "Use Autofill"
+     * "启用自动填充"
      */
     getMessage(
       messageName: "use_autofill",
@@ -821,7 +821,7 @@ declare module "wxt/browser" {
     /**
      * Use High Contrast
      *
-     * "Use High Contrast"
+     * "使用高对比度"
      */
     getMessage(
       messageName: "use_high_contrast",
@@ -831,7 +831,7 @@ declare module "wxt/browser" {
     /**
      * Theme
      *
-     * "Theme"
+     * "主题"
      */
     getMessage(
       messageName: "theme",
@@ -841,7 +841,7 @@ declare module "wxt/browser" {
     /**
      * Light theme
      *
-     * "Light"
+     * "浅色"
      */
     getMessage(
       messageName: "theme_light",
@@ -851,7 +851,7 @@ declare module "wxt/browser" {
     /**
      * Dark theme
      *
-     * "Dark"
+     * "深色"
      */
     getMessage(
       messageName: "theme_dark",
@@ -861,7 +861,7 @@ declare module "wxt/browser" {
     /**
      * Simple theme
      *
-     * "Simple"
+     * "简约"
      */
     getMessage(
       messageName: "theme_simple",
@@ -871,7 +871,7 @@ declare module "wxt/browser" {
     /**
      * Compact theme
      *
-     * "Compact"
+     * "精简视图"
      */
     getMessage(
       messageName: "theme_compact",
@@ -881,7 +881,7 @@ declare module "wxt/browser" {
     /**
      * High Contrast theme
      *
-     * "High Contrast"
+     * "高对比度"
      */
     getMessage(
       messageName: "theme_high_contrast",
@@ -891,7 +891,7 @@ declare module "wxt/browser" {
     /**
      * Flat theme
      *
-     * "Flat"
+     * "扁平"
      */
     getMessage(
       messageName: "theme_flat",
@@ -901,7 +901,7 @@ declare module "wxt/browser" {
     /**
      * 3rd party backup info
      *
-     * "Automatically backup your data to 3rd party storage services."
+     * "自动备份您的数据至第三方服务。"
      */
     getMessage(
       messageName: "storage_sync_info",
@@ -911,7 +911,7 @@ declare module "wxt/browser" {
     /**
      * Storage location
      *
-     * "Browser Sync"
+     * "浏览器数据同步"
      */
     getMessage(
       messageName: "browser_sync",
@@ -921,7 +921,7 @@ declare module "wxt/browser" {
     /**
      * Sign in to 3rd party storage services
      *
-     * "Sign in"
+     * "登录"
      */
     getMessage(
       messageName: "sign_in",
@@ -931,7 +931,7 @@ declare module "wxt/browser" {
     /**
      * Sign in to 3rd party storage services
      *
-     * "Sign in (Business)"
+     * "登录 (企业版)"
      */
     getMessage(
       messageName: "sign_in_business",
@@ -939,7 +939,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Why do business accounts require more permissions?"
+     * "为何企业版账户需要更高权限？"
      */
     getMessage(
       messageName: "onedrive_business_perms",
@@ -949,7 +949,7 @@ declare module "wxt/browser" {
     /**
      * Sign out of 3rd party storage services
      *
-     * "Logout"
+     * "注销"
      */
     getMessage(
       messageName: "log_out",
@@ -959,7 +959,7 @@ declare module "wxt/browser" {
     /**
      * Error authenticating to backup service. $SERVICE$ will be replaced with a proper noun (E.g.: 'Google Drive' or 'Dropbox')
      *
-     * "There was an issue connecting to your $SERVICE$ account, please sign in again."
+     * "连接到您的 $SERVICE$ 账号时出错，请重试。"
      */
     getMessage(
       messageName: "token_revoked",
@@ -969,7 +969,7 @@ declare module "wxt/browser" {
     /**
      * Warning if using account that is not supported by standard backup format.
      *
-     * "You have one or more Steam or Blizzard accounts. Unencrypted backups will not use standardized backup format."
+     * "您添加了Steam或战网账号，所以备份文件将不会使用标准输出格式。"
      */
     getMessage(
       messageName: "otp_unsupported_warn",
@@ -979,7 +979,7 @@ declare module "wxt/browser" {
     /**
      * Info text on import page
      *
-     * "You can import backups from some other applications."
+     * "您可以从一些其它的应用中导入备份。"
      */
     getMessage(
       messageName: "otp_backup_inform",
@@ -989,7 +989,7 @@ declare module "wxt/browser" {
     /**
      * learn more link on import page. Placed after otp_backup_inform
      *
-     * "Learn more"
+     * "了解更多"
      */
     getMessage(
       messageName: "otp_backup_learn",
@@ -997,7 +997,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Loading..."
+     * "正在载入..."
      */
     getMessage(
       messageName: "loading",
@@ -1005,7 +1005,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Lock after"
+     * "在"
      */
     getMessage(
       messageName: "autolock",
@@ -1013,7 +1013,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "minutes"
+     * "分钟后自动锁定"
      */
     getMessage(
       messageName: "minutes",
@@ -1021,7 +1021,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Advanced"
+     * "高级选项"
      */
     getMessage(
       messageName: "advanced",
@@ -1029,7 +1029,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Period"
+     * "周期"
      */
     getMessage(
       messageName: "period",
@@ -1037,7 +1037,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Type"
+     * "类型"
      */
     getMessage(
       messageName: "type",
@@ -1045,7 +1045,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Invalid"
+     * "无效代码"
      */
     getMessage(
       messageName: "invalid",
@@ -1053,7 +1053,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Digits"
+     * "位数"
      */
     getMessage(
       messageName: "digits",
@@ -1061,7 +1061,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Algorithm"
+     * "算法"
      */
     getMessage(
       messageName: "algorithm",
@@ -1069,7 +1069,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Smart Filter"
+     * "智能过滤器"
      */
     getMessage(
       messageName: "smart_filter",
@@ -1077,7 +1077,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Backup"
+     * "备份"
      */
     getMessage(
       messageName: "backup",
@@ -1085,7 +1085,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Backup your data to a file."
+     * "备份数据到文件。"
      */
     getMessage(
       messageName: "backup_file_info",
@@ -1093,7 +1093,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Your password does not meet your organization's security requirements. Contact your administrator for more information."
+     * "您的密码不符合您组织的安全要求。有关详细信息，请联系组织管理员。"
      */
     getMessage(
       messageName: "password_policy_default_hint",
@@ -1101,7 +1101,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Advisor"
+     * "建议"
      */
     getMessage(
       messageName: "advisor",
@@ -1109,7 +1109,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Set a password to protect your data."
+     * "设置密码以保护您的数据。"
      */
     getMessage(
       messageName: "advisor_insight_password_not_set",
@@ -1117,7 +1117,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Enable auto-lock to protect your data."
+     * "启用自动锁定来保护您的数据。"
      */
     getMessage(
       messageName: "advisor_insight_auto_lock_not_set",
@@ -1125,7 +1125,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Browser sync is disabled. Enabling it allows accounts to be synced across browsers."
+     * "浏览器同步已被禁用。启用它以允许跨浏览器的帐户同步。"
      */
     getMessage(
       messageName: "advisor_insight_browser_sync_not_enabled",
@@ -1133,7 +1133,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Autofill can be enabled to automatically fill codes into websites."
+     * "可以启用自动填充以自动将代码填充到网站中。"
      */
     getMessage(
       messageName: "advisor_insight_auto_fill_not_enabled",
@@ -1141,7 +1141,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Enabling smart filter allows for quick access to accounts."
+     * "开启智能过滤以便快速访问账户。"
      */
     getMessage(
       messageName: "advisor_insight_smart_filter_not_enabled",
@@ -1149,7 +1149,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Show all insights."
+     * "显示所有见解。"
      */
     getMessage(
       messageName: "show_all_insights",
@@ -1157,7 +1157,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "No insights found, everything looks good!"
+     * "没有可供参考的见解，一切看起来都很好！"
      */
     getMessage(
       messageName: "no_insight_available",
@@ -1165,7 +1165,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Danger"
+     * "危险"
      */
     getMessage(
       messageName: "danger",
@@ -1173,7 +1173,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Warning"
+     * "警告"
      */
     getMessage(
       messageName: "warning",
@@ -1181,7 +1181,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Info"
+     * "信息"
      */
     getMessage(
       messageName: "info",
@@ -1189,7 +1189,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Dismiss"
+     * "忽略"
      */
     getMessage(
       messageName: "dismiss",
@@ -1197,7 +1197,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Learn more"
+     * "了解更多"
      */
     getMessage(
       messageName: "learn_more",
@@ -1205,7 +1205,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Add to context menu"
+     * "添加到右键菜单"
      */
     getMessage(
       messageName: "enable_context_menu",
@@ -1213,7 +1213,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "No accounts to display. Add your first account now."
+     * "没有可显示的账户。现在添加您的第一个账户。"
      */
     getMessage(
       messageName: "no_entires",
@@ -1221,7 +1221,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Permissions"
+     * "权限管理"
      */
     getMessage(
       messageName: "permissions",
@@ -1229,7 +1229,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Revoke"
+     * "撤销"
      */
     getMessage(
       messageName: "permission_revoke",
@@ -1237,7 +1237,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Show non-revocable permissions"
+     * "显示不可撤销的权限"
      */
     getMessage(
       messageName: "permission_show_required_permissions",
@@ -1245,7 +1245,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "This is a required permission and cannot be revoked."
+     * "这是必需的权限，不能撤销。"
      */
     getMessage(
       messageName: "permission_required",
@@ -1253,7 +1253,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Access to the current tab to scan QR codes."
+     * "访问当前标签页以扫描二维码。"
      */
     getMessage(
       messageName: "permission_active_tab",
@@ -1261,7 +1261,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Access to browser storage to store account data."
+     * "访问浏览器存储以存储帐户数据。"
      */
     getMessage(
       messageName: "permission_storage",
@@ -1269,7 +1269,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Allows sign in to 3rd party storage services."
+     * "用以登录第三方存储服务。"
      */
     getMessage(
       messageName: "permission_identity",
@@ -1277,7 +1277,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Allows auto-lock to work."
+     * "允许自动锁定功能生效。"
      */
     getMessage(
       messageName: "permission_alarms",
@@ -1285,7 +1285,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Inject scripts into he current tab to scan QR codes and allow auto-fill to work."
+     * "将脚本注入当前标签页以扫描二维码并允许自动填充功能生效。"
      */
     getMessage(
       messageName: "permission_scripting",
@@ -1293,7 +1293,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Grants write-only access to the clipboard to copy codes to clipboard when you click on the account."
+     * "剪贴板只写权限以当您点击该帐户时复制代码到剪贴板。"
      */
     getMessage(
       messageName: "permission_clipboard_write",
@@ -1301,7 +1301,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Adds Authenticator to context menu."
+     * "将身份验证器添加到右键菜单。"
      */
     getMessage(
       messageName: "permission_context_menus",
@@ -1309,7 +1309,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Allows clock sync with Google."
+     * "允许从 Google 同步时间"
      */
     getMessage(
       messageName: "permission_sync_clock",
@@ -1317,7 +1317,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Allows backup to Dropbox."
+     * "允许备份到 Dropbox"
      */
     getMessage(
       messageName: "permission_dropbox",
@@ -1325,7 +1325,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "You must disable Dropbox backup first."
+     * "您必须先停用 Dropbox 备份。"
      */
     getMessage(
       messageName: "permission_dropbox_cannot_revoke",
@@ -1333,7 +1333,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Allows backup to Google Drive."
+     * "允许备份到 Google Drive。"
      */
     getMessage(
       messageName: "permission_drive",
@@ -1341,7 +1341,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "You must disable Google Drive backup first."
+     * "您必须先停用 Google Drive 备份。"
      */
     getMessage(
       messageName: "permission_drive_cannot_revoke",
@@ -1349,7 +1349,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Allows backup to OneDrive."
+     * "允许备份到 OneDrive。"
      */
     getMessage(
       messageName: "permission_onedrive",
@@ -1357,7 +1357,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "You must disable OneDrive backup first."
+     * "您必须先停用 OneDrive 备份。"
      */
     getMessage(
       messageName: "permission_onedrive_cannot_revoke",
@@ -1365,7 +1365,7 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Unknown permission. If see this message, please send a bug report."
+     * "未知权限。如果您看到此消息，请发送错误报告。"
      */
     getMessage(
       messageName: "permission_unknown_permission",
@@ -1381,15 +1381,855 @@ declare module "wxt/browser" {
       options?: GetMessageOptions,
     ): string;
     /**
-     * "Warning: Smart filter loosely matches the domain name to an account. Always verify that you are on the correct website before entering a code!"
+     * "警告：智能过滤器会宽松匹配域名到账户。在输入验证码前，请始终确认您在正确的网站上！"
      */
     getMessage(
       messageName: "activate_auto_filter",
       substitutions?: string | string[],
       options?: GetMessageOptions,
     ): string;
+    /**
+     * "Auths"
+     */
     getMessage(
-      messageName: "@@extension_id" | "@@ui_locale" | "@@bidi_dir" | "@@bidi_reversed_dir" | "@@bidi_start_edge" | "@@bidi_end_edge" | "extName" | "extShortName" | "extDesc" | "added" | "errorqr" | "errorsecret" | "add_code" | "add_qr" | "add_secret" | "migration_fail" | "migration_partly_fail" | "close" | "ok" | "yes" | "no" | "account" | "accountName" | "issuer" | "secret" | "updateSuccess" | "updateFailure" | "about" | "settings" | "security" | "current_phrase" | "new_phrase" | "phrase" | "confirm_phrase" | "confirm_delete" | "confirm_delete_all" | "delete_all" | "delete_all_warning" | "security_warning" | "update" | "phrase_incorrect" | "phrase_incorrect_export" | "phrase_not_match" | "encrypted" | "copied" | "feedback" | "translate" | "source" | "passphrase_info" | "sync_clock" | "remember_phrase" | "clock_too_far_off" | "remind_backup" | "capture_failed" | "capture_local_file_failed" | "based_on_time" | "based_on_counter" | "resize_popup_page" | "scale" | "export_info" | "download_backup" | "import_backup" | "import_backup_file" | "import_backup_qr" | "import_qr_images" | "import_backup_code" | "import_otp_urls" | "import_backup_qr_partly_failed" | "import_backup_qr_in_batches" | "show_all_entries" | "dropbox_risk" | "import_error_password" | "local_passphrase_warning" | "remove" | "download_enc_backup" | "search" | "popout" | "lock" | "edit" | "manual_dropbox" | "use_autofill" | "use_high_contrast" | "theme" | "theme_light" | "theme_dark" | "theme_simple" | "theme_compact" | "theme_high_contrast" | "theme_flat" | "storage_sync_info" | "browser_sync" | "sign_in" | "sign_in_business" | "onedrive_business_perms" | "log_out" | "token_revoked" | "otp_unsupported_warn" | "otp_backup_inform" | "otp_backup_learn" | "loading" | "autolock" | "minutes" | "advanced" | "period" | "type" | "invalid" | "digits" | "algorithm" | "smart_filter" | "backup" | "backup_file_info" | "password_policy_default_hint" | "advisor" | "advisor_insight_password_not_set" | "advisor_insight_auto_lock_not_set" | "advisor_insight_browser_sync_not_enabled" | "advisor_insight_auto_fill_not_enabled" | "advisor_insight_smart_filter_not_enabled" | "show_all_insights" | "no_insight_available" | "danger" | "warning" | "info" | "dismiss" | "learn_more" | "enable_context_menu" | "no_entires" | "permissions" | "permission_revoke" | "permission_show_required_permissions" | "permission_required" | "permission_active_tab" | "permission_storage" | "permission_identity" | "permission_alarms" | "permission_scripting" | "permission_clipboard_write" | "permission_context_menus" | "permission_sync_clock" | "permission_dropbox" | "permission_dropbox_cannot_revoke" | "permission_drive" | "permission_drive_cannot_revoke" | "permission_onedrive" | "permission_onedrive_cannot_revoke" | "permission_unknown_permission" | "phrase_wrong" | "activate_auto_filter",
+      messageName: "appName",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "返回"
+     */
+    getMessage(
+      messageName: "back",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "通用"
+     */
+    getMessage(
+      messageName: "general",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "外观"
+     */
+    getMessage(
+      messageName: "appearance",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "默认"
+     */
+    getMessage(
+      messageName: "theme_default",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "缩放"
+     */
+    getMessage(
+      messageName: "zoom",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "功能"
+     */
+    getMessage(
+      messageName: "features",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "启用自动填充"
+     */
+    getMessage(
+      messageName: "enable_autofill",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "自动将验证码填充到网站"
+     */
+    getMessage(
+      messageName: "autofill_description",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "根据当前网站自动筛选账户"
+     */
+    getMessage(
+      messageName: "smart_filter_description",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "将身份验证器添加到浏览器右键菜单"
+     */
+    getMessage(
+      messageName: "context_menu_description",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "密码保护"
+     */
+    getMessage(
+      messageName: "password_protection",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "自动锁定"
+     */
+    getMessage(
+      messageName: "auto_lock",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "禁用"
+     */
+    getMessage(
+      messageName: "disabled",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "分钟"
+     */
+    getMessage(
+      messageName: "minute",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "小时"
+     */
+    getMessage(
+      messageName: "hour",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "在一段时间不活动后自动锁定扩展"
+     */
+    getMessage(
+      messageName: "auto_lock_description",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "重置密码"
+     */
+    getMessage(
+      messageName: "reset_password",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "这将清除所有数据并重置扩展。此操作无法撤销。"
+     */
+    getMessage(
+      messageName: "reset_password_warning",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "确定要重置所有数据吗？此操作无法撤销。"
+     */
+    getMessage(
+      messageName: "reset_password_confirm",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "所有数据已重置。"
+     */
+    getMessage(
+      messageName: "password_reset",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "隐私"
+     */
+    getMessage(
+      messageName: "privacy",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "清除所有数据"
+     */
+    getMessage(
+      messageName: "clear_all_data",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "这将永久删除您的所有账户和设置。"
+     */
+    getMessage(
+      messageName: "clear_all_data_warning",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "确定要删除所有数据吗？此操作无法撤销。"
+     */
+    getMessage(
+      messageName: "clear_all_data_confirm",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "所有数据已清除。"
+     */
+    getMessage(
+      messageName: "all_data_cleared",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "备份与恢复"
+     */
+    getMessage(
+      messageName: "backup_restore",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "管理备份"
+     */
+    getMessage(
+      messageName: "manage_backups",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "导出或导入您的账户数据"
+     */
+    getMessage(
+      messageName: "backup_description",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "版本"
+     */
+    getMessage(
+      messageName: "version",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "开发者"
+     */
+    getMessage(
+      messageName: "developer",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "许可证"
+     */
+    getMessage(
+      messageName: "license",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "GitHub"
+     */
+    getMessage(
+      messageName: "github",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "报告问题"
+     */
+    getMessage(
+      messageName: "report_issue",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "帮助"
+     */
+    getMessage(
+      messageName: "help",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "搜索账户..."
+     */
+    getMessage(
+      messageName: "search_accounts",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "清除"
+     */
+    getMessage(
+      messageName: "clear",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "个账户"
+     */
+    getMessage(
+      messageName: "accounts",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "完成"
+     */
+    getMessage(
+      messageName: "done",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "暂无账户"
+     */
+    getMessage(
+      messageName: "no_accounts_yet",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "点击 + 添加您的第一个账户"
+     */
+    getMessage(
+      messageName: "tap_to_add",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "没有匹配的账户"
+     */
+    getMessage(
+      messageName: "no_matching_accounts",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "尝试其他搜索词"
+     */
+    getMessage(
+      messageName: "try_different_search",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "添加账户"
+     */
+    getMessage(
+      messageName: "add_account",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "账户名称"
+     */
+    getMessage(
+      messageName: "account_name",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "例如 Google、GitHub"
+     */
+    getMessage(
+      messageName: "account_name_placeholder",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "用户名（可选）"
+     */
+    getMessage(
+      messageName: "username_optional",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "例如 user@example.com"
+     */
+    getMessage(
+      messageName: "username_placeholder",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "密钥"
+     */
+    getMessage(
+      messageName: "secret_key",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "输入您的密钥"
+     */
+    getMessage(
+      messageName: "secret_key_placeholder",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "刷新周期"
+     */
+    getMessage(
+      messageName: "refresh_period",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "秒"
+     */
+    getMessage(
+      messageName: "seconds",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "验证码长度"
+     */
+    getMessage(
+      messageName: "code_length",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "请输入账户名称"
+     */
+    getMessage(
+      messageName: "please_enter_account_name",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "请输入密钥"
+     */
+    getMessage(
+      messageName: "please_enter_secret_key",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "密钥格式无效"
+     */
+    getMessage(
+      messageName: "invalid_secret_key",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "添加"
+     */
+    getMessage(
+      messageName: "add",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "扫描二维码"
+     */
+    getMessage(
+      messageName: "scan_qr_code",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "置顶"
+     */
+    getMessage(
+      messageName: "pin",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "取消置顶"
+     */
+    getMessage(
+      messageName: "unpin",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "删除"
+     */
+    getMessage(
+      messageName: "delete",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "确定要删除 {name} 吗？"
+     */
+    getMessage(
+      messageName: "delete_confirm",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "计数器"
+     */
+    getMessage(
+      messageName: "counter",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "设置密码"
+     */
+    getMessage(
+      messageName: "password_setup",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "创建密码以保护您的账户"
+     */
+    getMessage(
+      messageName: "password_setup_description",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "创建密码"
+     */
+    getMessage(
+      messageName: "create_password",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "确认密码"
+     */
+    getMessage(
+      messageName: "confirm_password",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "设置密码"
+     */
+    getMessage(
+      messageName: "set_password",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "跳过"
+     */
+    getMessage(
+      messageName: "skip",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "密码不匹配"
+     */
+    getMessage(
+      messageName: "password_mismatch",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "设置密码失败"
+     */
+    getMessage(
+      messageName: "password_setup_failed",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "解锁"
+     */
+    getMessage(
+      messageName: "unlock",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "输入您的密码"
+     */
+    getMessage(
+      messageName: "enter_password",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "忘记密码？"
+     */
+    getMessage(
+      messageName: "forgot_password",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "这将重置所有数据。确定吗？"
+     */
+    getMessage(
+      messageName: "forgot_password_confirm",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "尝试次数过多，请稍后再试。"
+     */
+    getMessage(
+      messageName: "too_many_attempts",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "在当前网页上框选二维码区域或上传图片文件。"
+     */
+    getMessage(
+      messageName: "qr_scanner_description",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "截取屏幕"
+     */
+    getMessage(
+      messageName: "qr_capture_screen",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "从当前网页扫描二维码"
+     */
+    getMessage(
+      messageName: "qr_capture_screen_desc",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "上传图片"
+     */
+    getMessage(
+      messageName: "qr_upload_image",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "选择二维码图片文件"
+     */
+    getMessage(
+      messageName: "qr_upload_image_desc",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "此二维码不是有效的验证器码。需要 otpauth:// 格式的 URL。"
+     */
+    getMessage(
+      messageName: "qr_error_not_otp_url",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "不支持的 OTP 类型。仅支持 TOTP 和 HOTP。"
+     */
+    getMessage(
+      messageName: "qr_error_unsupported_type",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "二维码中未找到密钥。"
+     */
+    getMessage(
+      messageName: "qr_error_no_secret",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "密钥格式无效。必须是 Base32 编码。"
+     */
+    getMessage(
+      messageName: "qr_error_invalid_secret",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "刷新周期无效。必须在 1 到 300 秒之间。"
+     */
+    getMessage(
+      messageName: "qr_error_invalid_period",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "验证码长度无效。必须在 4 到 10 位之间。"
+     */
+    getMessage(
+      messageName: "qr_error_invalid_digits",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "无法解析二维码数据。"
+     */
+    getMessage(
+      messageName: "qr_error_parse_failed",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "扫描时发生未知错误。"
+     */
+    getMessage(
+      messageName: "qr_error_unknown",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "未找到活动标签页。请重试。"
+     */
+    getMessage(
+      messageName: "qr_error_no_active_tab",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "权限被拒绝。请允许屏幕截取权限。"
+     */
+    getMessage(
+      messageName: "qr_error_capture_permission",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "屏幕截取失败。请重试。"
+     */
+    getMessage(
+      messageName: "qr_error_capture_failed",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "Canvas 不可用。请重试。"
+     */
+    getMessage(
+      messageName: "qr_error_canvas_unavailable",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "图片中未找到二维码。请确保二维码清晰可见。"
+     */
+    getMessage(
+      messageName: "qr_error_not_found",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "图片加载失败。请尝试其他文件。"
+     */
+    getMessage(
+      messageName: "qr_error_image_load_failed",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "所选文件不是图片。请选择图片文件。"
+     */
+    getMessage(
+      messageName: "qr_error_not_image",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "文件过大。最大支持 10MB。"
+     */
+    getMessage(
+      messageName: "qr_error_file_too_large",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "文件读取失败。请重试。"
+     */
+    getMessage(
+      messageName: "qr_error_file_read_failed",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "未知"
+     */
+    getMessage(
+      messageName: "qr_unknown_issuer",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "框选区域"
+     */
+    getMessage(
+      messageName: "qr_select_region",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "在页面上拖动鼠标框选二维码区域"
+     */
+    getMessage(
+      messageName: "qr_select_region_desc",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "拖动鼠标框选二维码区域，按 ESC 取消。"
+     */
+    getMessage(
+      messageName: "qr_region_instruction",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "无法在此页面扫描，请在普通网页上尝试。"
+     */
+    getMessage(
+      messageName: "qr_error_restricted_page",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "选择区域太小，请选择更大的区域。"
+     */
+    getMessage(
+      messageName: "qr_error_selection_too_small",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    /**
+     * "无法连接到页面，请刷新页面后重试。"
+     */
+    getMessage(
+      messageName: "qr_error_connection_failed",
+      substitutions?: string | string[],
+      options?: GetMessageOptions,
+    ): string;
+    getMessage(
+      messageName: "@@extension_id" | "@@ui_locale" | "@@bidi_dir" | "@@bidi_reversed_dir" | "@@bidi_start_edge" | "@@bidi_end_edge" | "extName" | "extShortName" | "extDesc" | "added" | "errorqr" | "errorsecret" | "add_code" | "add_qr" | "add_secret" | "migration_fail" | "migration_partly_fail" | "close" | "ok" | "yes" | "no" | "account" | "accountName" | "issuer" | "secret" | "updateSuccess" | "updateFailure" | "about" | "settings" | "security" | "current_phrase" | "new_phrase" | "phrase" | "confirm_phrase" | "confirm_delete" | "confirm_delete_all" | "delete_all" | "delete_all_warning" | "security_warning" | "update" | "phrase_incorrect" | "phrase_incorrect_export" | "phrase_not_match" | "encrypted" | "copied" | "feedback" | "translate" | "source" | "passphrase_info" | "sync_clock" | "remember_phrase" | "clock_too_far_off" | "remind_backup" | "capture_failed" | "capture_local_file_failed" | "based_on_time" | "based_on_counter" | "resize_popup_page" | "scale" | "export_info" | "download_backup" | "import_backup" | "import_backup_file" | "import_backup_qr" | "import_qr_images" | "import_backup_code" | "import_otp_urls" | "import_backup_qr_partly_failed" | "import_backup_qr_in_batches" | "show_all_entries" | "dropbox_risk" | "import_error_password" | "local_passphrase_warning" | "remove" | "download_enc_backup" | "search" | "popout" | "lock" | "edit" | "manual_dropbox" | "use_autofill" | "use_high_contrast" | "theme" | "theme_light" | "theme_dark" | "theme_simple" | "theme_compact" | "theme_high_contrast" | "theme_flat" | "storage_sync_info" | "browser_sync" | "sign_in" | "sign_in_business" | "onedrive_business_perms" | "log_out" | "token_revoked" | "otp_unsupported_warn" | "otp_backup_inform" | "otp_backup_learn" | "loading" | "autolock" | "minutes" | "advanced" | "period" | "type" | "invalid" | "digits" | "algorithm" | "smart_filter" | "backup" | "backup_file_info" | "password_policy_default_hint" | "advisor" | "advisor_insight_password_not_set" | "advisor_insight_auto_lock_not_set" | "advisor_insight_browser_sync_not_enabled" | "advisor_insight_auto_fill_not_enabled" | "advisor_insight_smart_filter_not_enabled" | "show_all_insights" | "no_insight_available" | "danger" | "warning" | "info" | "dismiss" | "learn_more" | "enable_context_menu" | "no_entires" | "permissions" | "permission_revoke" | "permission_show_required_permissions" | "permission_required" | "permission_active_tab" | "permission_storage" | "permission_identity" | "permission_alarms" | "permission_scripting" | "permission_clipboard_write" | "permission_context_menus" | "permission_sync_clock" | "permission_dropbox" | "permission_dropbox_cannot_revoke" | "permission_drive" | "permission_drive_cannot_revoke" | "permission_onedrive" | "permission_onedrive_cannot_revoke" | "permission_unknown_permission" | "phrase_wrong" | "activate_auto_filter" | "appName" | "back" | "general" | "appearance" | "theme_default" | "zoom" | "features" | "enable_autofill" | "autofill_description" | "smart_filter_description" | "context_menu_description" | "password_protection" | "auto_lock" | "disabled" | "minute" | "hour" | "auto_lock_description" | "reset_password" | "reset_password_warning" | "reset_password_confirm" | "password_reset" | "privacy" | "clear_all_data" | "clear_all_data_warning" | "clear_all_data_confirm" | "all_data_cleared" | "backup_restore" | "manage_backups" | "backup_description" | "version" | "developer" | "license" | "github" | "report_issue" | "help" | "search_accounts" | "clear" | "accounts" | "done" | "no_accounts_yet" | "tap_to_add" | "no_matching_accounts" | "try_different_search" | "add_account" | "account_name" | "account_name_placeholder" | "username_optional" | "username_placeholder" | "secret_key" | "secret_key_placeholder" | "refresh_period" | "seconds" | "code_length" | "please_enter_account_name" | "please_enter_secret_key" | "invalid_secret_key" | "add" | "scan_qr_code" | "pin" | "unpin" | "delete" | "delete_confirm" | "counter" | "password_setup" | "password_setup_description" | "create_password" | "confirm_password" | "set_password" | "skip" | "password_mismatch" | "password_setup_failed" | "unlock" | "enter_password" | "forgot_password" | "forgot_password_confirm" | "too_many_attempts" | "qr_scanner_description" | "qr_capture_screen" | "qr_capture_screen_desc" | "qr_upload_image" | "qr_upload_image_desc" | "qr_error_not_otp_url" | "qr_error_unsupported_type" | "qr_error_no_secret" | "qr_error_invalid_secret" | "qr_error_invalid_period" | "qr_error_invalid_digits" | "qr_error_parse_failed" | "qr_error_unknown" | "qr_error_no_active_tab" | "qr_error_capture_permission" | "qr_error_capture_failed" | "qr_error_canvas_unavailable" | "qr_error_not_found" | "qr_error_image_load_failed" | "qr_error_not_image" | "qr_error_file_too_large" | "qr_error_file_read_failed" | "qr_unknown_issuer" | "qr_select_region" | "qr_select_region_desc" | "qr_region_instruction" | "qr_error_restricted_page" | "qr_error_selection_too_small" | "qr_error_connection_failed",
       substitutions?: string | string[],
       options?: GetMessageOptions,
     ): string;

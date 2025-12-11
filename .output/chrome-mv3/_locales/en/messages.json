@@ -520,5 +520,320 @@
   },
   "activate_auto_filter": {
     "message": "Warning: Smart filter loosely matches the domain name to an account. Always verify that you are on the correct website before entering a code!"
+  },
+  "appName": {
+    "message": "Auths"
+  },
+  "back": {
+    "message": "Back"
+  },
+  "general": {
+    "message": "General"
+  },
+  "appearance": {
+    "message": "Appearance"
+  },
+  "theme_default": {
+    "message": "Default"
+  },
+  "zoom": {
+    "message": "Zoom"
+  },
+  "features": {
+    "message": "Features"
+  },
+  "enable_autofill": {
+    "message": "Enable Autofill"
+  },
+  "autofill_description": {
+    "message": "Automatically fill verification codes into websites"
+  },
+  "smart_filter_description": {
+    "message": "Automatically filter accounts based on the current website"
+  },
+  "context_menu_description": {
+    "message": "Add Authenticator to browser right-click menu"
+  },
+  "password_protection": {
+    "message": "Password Protection"
+  },
+  "auto_lock": {
+    "message": "Auto Lock"
+  },
+  "disabled": {
+    "message": "Disabled"
+  },
+  "minute": {
+    "message": "minute"
+  },
+  "hour": {
+    "message": "hour"
+  },
+  "auto_lock_description": {
+    "message": "Automatically lock the extension after a period of inactivity"
+  },
+  "reset_password": {
+    "message": "Reset Password"
+  },
+  "reset_password_warning": {
+    "message": "This will clear all data and reset the extension. This action cannot be undone."
+  },
+  "reset_password_confirm": {
+    "message": "Are you sure you want to reset all data? This action cannot be undone."
+  },
+  "password_reset": {
+    "message": "All data has been reset."
+  },
+  "privacy": {
+    "message": "Privacy"
+  },
+  "clear_all_data": {
+    "message": "Clear All Data"
+  },
+  "clear_all_data_warning": {
+    "message": "This will permanently delete all your accounts and settings."
+  },
+  "clear_all_data_confirm": {
+    "message": "Are you sure you want to delete all data? This action cannot be undone."
+  },
+  "all_data_cleared": {
+    "message": "All data has been cleared."
+  },
+  "backup_restore": {
+    "message": "Backup & Restore"
+  },
+  "manage_backups": {
+    "message": "Manage Backups"
+  },
+  "backup_description": {
+    "message": "Export or import your account data"
+  },
+  "version": {
+    "message": "Version"
+  },
+  "developer": {
+    "message": "Developer"
+  },
+  "license": {
+    "message": "License"
+  },
+  "github": {
+    "message": "GitHub"
+  },
+  "report_issue": {
+    "message": "Report Issue"
+  },
+  "help": {
+    "message": "Help"
+  },
+  "search_accounts": {
+    "message": "Search accounts..."
+  },
+  "clear": {
+    "message": "Clear"
+  },
+  "accounts": {
+    "message": "accounts"
+  },
+  "done": {
+    "message": "Done"
+  },
+  "no_accounts_yet": {
+    "message": "No accounts yet"
+  },
+  "tap_to_add": {
+    "message": "Tap + to add your first account"
+  },
+  "no_matching_accounts": {
+    "message": "No matching accounts"
+  },
+  "try_different_search": {
+    "message": "Try a different search term"
+  },
+  "add_account": {
+    "message": "Add Account"
+  },
+  "account_name": {
+    "message": "Account Name"
+  },
+  "account_name_placeholder": {
+    "message": "e.g. Google, GitHub"
+  },
+  "username_optional": {
+    "message": "Username (optional)"
+  },
+  "username_placeholder": {
+    "message": "e.g. user@example.com"
+  },
+  "secret_key": {
+    "message": "Secret Key"
+  },
+  "secret_key_placeholder": {
+    "message": "Enter your secret key"
+  },
+  "refresh_period": {
+    "message": "Refresh Period"
+  },
+  "seconds": {
+    "message": "seconds"
+  },
+  "code_length": {
+    "message": "Code Length"
+  },
+  "please_enter_account_name": {
+    "message": "Please enter an account name"
+  },
+  "please_enter_secret_key": {
+    "message": "Please enter a secret key"
+  },
+  "invalid_secret_key": {
+    "message": "Invalid secret key format"
+  },
+  "add": {
+    "message": "Add"
+  },
+  "scan_qr_code": {
+    "message": "Scan QR Code"
+  },
+  "pin": {
+    "message": "Pin"
+  },
+  "unpin": {
+    "message": "Unpin"
+  },
+  "delete": {
+    "message": "Delete"
+  },
+  "delete_confirm": {
+    "message": "Are you sure you want to delete {name}?"
+  },
+  "counter": {
+    "message": "Counter"
+  },
+  "password_setup": {
+    "message": "Set Up Password"
+  },
+  "password_setup_description": {
+    "message": "Create a password to protect your accounts"
+  },
+  "create_password": {
+    "message": "Create Password"
+  },
+  "confirm_password": {
+    "message": "Confirm Password"
+  },
+  "set_password": {
+    "message": "Set Password"
+  },
+  "skip": {
+    "message": "Skip"
+  },
+  "password_mismatch": {
+    "message": "Passwords do not match"
+  },
+  "password_setup_failed": {
+    "message": "Failed to set password"
+  },
+  "unlock": {
+    "message": "Unlock"
+  },
+  "enter_password": {
+    "message": "Enter your password"
+  },
+  "forgot_password": {
+    "message": "Forgot Password?"
+  },
+  "forgot_password_confirm": {
+    "message": "This will reset all data. Are you sure?"
+  },
+  "too_many_attempts": {
+    "message": "Too many failed attempts. Please try again later."
+  },
+  "qr_scanner_description": {
+    "message": "Select a QR code area on the current webpage or upload an image file."
+  },
+  "qr_capture_screen": {
+    "message": "Capture from Screen"
+  },
+  "qr_capture_screen_desc": {
+    "message": "Scan QR code from current webpage"
+  },
+  "qr_upload_image": {
+    "message": "Upload Image"
+  },
+  "qr_upload_image_desc": {
+    "message": "Select a QR code image file"
+  },
+  "qr_error_not_otp_url": {
+    "message": "This QR code is not a valid authenticator code. Expected otpauth:// URL."
+  },
+  "qr_error_unsupported_type": {
+    "message": "Unsupported OTP type. Only TOTP and HOTP are supported."
+  },
+  "qr_error_no_secret": {
+    "message": "No secret key found in QR code."
+  },
+  "qr_error_invalid_secret": {
+    "message": "Invalid secret key format. Must be Base32 encoded."
+  },
+  "qr_error_invalid_period": {
+    "message": "Invalid refresh period. Must be between 1 and 300 seconds."
+  },
+  "qr_error_invalid_digits": {
+    "message": "Invalid code length. Must be between 4 and 10 digits."
+  },
+  "qr_error_parse_failed": {
+    "message": "Failed to parse QR code data."
+  },
+  "qr_error_unknown": {
+    "message": "An unknown error occurred while scanning."
+  },
+  "qr_error_no_active_tab": {
+    "message": "No active tab found. Please try again."
+  },
+  "qr_error_capture_permission": {
+    "message": "Permission denied. Please allow screen capture."
+  },
+  "qr_error_capture_failed": {
+    "message": "Failed to capture screen. Please try again."
+  },
+  "qr_error_canvas_unavailable": {
+    "message": "Canvas not available. Please try again."
+  },
+  "qr_error_not_found": {
+    "message": "No QR code found in the image. Please ensure the QR code is clearly visible."
+  },
+  "qr_error_image_load_failed": {
+    "message": "Failed to load image. Please try a different file."
+  },
+  "qr_error_not_image": {
+    "message": "Selected file is not an image. Please select an image file."
+  },
+  "qr_error_file_too_large": {
+    "message": "File is too large. Maximum size is 10MB."
+  },
+  "qr_error_file_read_failed": {
+    "message": "Failed to read file. Please try again."
+  },
+  "qr_unknown_issuer": {
+    "message": "Unknown"
+  },
+  "qr_select_region": {
+    "message": "Select Region"
+  },
+  "qr_select_region_desc": {
+    "message": "Click and drag to select QR code area on the page"
+  },
+  "qr_region_instruction": {
+    "message": "Click and drag to select QR code area. Press ESC to cancel."
+  },
+  "qr_error_restricted_page": {
+    "message": "Cannot scan on this page. Please try on a regular webpage."
+  },
+  "qr_error_selection_too_small": {
+    "message": "Selection area is too small. Please select a larger area."
+  },
+  "qr_error_connection_failed": {
+    "message": "Failed to connect to the page. Please refresh the page and try again."
   }
 }

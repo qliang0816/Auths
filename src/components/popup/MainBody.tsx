@@ -1,8 +1,38 @@
 import React, { useState, useRef } from 'react';
 import { useAccounts, useStyle } from '../../store';
+import { useI18n } from '../../i18n';
 import EntryComponent from './EntryComponent';
 import AddAccountForm from './AddAccountForm';
 import QRScanner from './QRScanner';
+
+// SVG Icons
+const SearchIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="11" cy="11" r="7" stroke="currentColor" strokeWidth="2"/>
+    <path d="M16 16L21 21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+
+const CloseIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 6L18 18M6 18L18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+
+const PlusIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 5V19M5 12H19" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+
+const KeyIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="8" cy="15" r="4" stroke="currentColor" strokeWidth="2"/>
+    <path d="M11 12L21 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M18 5L21 2" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M16 7L18 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
 
 // Use OTPEntryInterface from global declarations
 declare global {
@@ -22,7 +52,8 @@ declare global {
 
 export default function MainBody() {
   const { entries, filter, showSearch, dispatch } = useAccounts();
-  const { style } = useStyle();
+  const { style, dispatch: styleDispatch } = useStyle();
+  const { t } = useI18n();
   const [searchText, setSearchText] = useState('');
   const [showAddForm, setShowAddForm] = useState(false);
   const [showQRScanner, setShowQRScanner] = useState(false);
@@ -89,86 +120,101 @@ export default function MainBody() {
     setShowQRScanner(true);
   };
 
+  const handleToggleEdit = () => {
+    styleDispatch({ type: style.isEditing ? 'stopEdit' : 'startEdit' });
+  };
+
   return (
     <>
-      <div
-        id="codes"
-        className={`${filter && showSearch ? 'filter search' : ''} ${style.isEditing ? 'edit' : ''}`}
-        ref={containerRef}
-        onKeyDown={handleKeyDown}
-      >
-        {/* Search Bar */}
-        <div className="search-bar">
+      {/* Search Bar */}
+      <div className="search-bar">
+        <div className="search-container">
+          <span className="search-icon">
+            <SearchIcon />
+          </span>
           <input
             id="searchInput"
             type="text"
             value={searchText}
             onChange={(e) => setSearchText(e.target.value)}
-            placeholder="🔍 搜索账户..."
+            placeholder={t('search_accounts')}
             className="search-input"
           />
           {searchText && (
             <button
               className="clear-search"
               onClick={() => setSearchText('')}
-              title="清除"
+              title={t('clear')}
+              aria-label={t('clear')}
             >
-              ✕
+              <CloseIcon />
             </button>
           )}
         </div>
-
-        {/* Add Account Button */}
-        {!style.isEditing && (
-          <button
-            className="add-account-btn"
-            onClick={() => setShowAddForm(true)}
-          >
-            <span className="plus-icon">+</span>
-            添加账户
-          </button>
-        )}
-
-        {/* Edit Mode Toggle */}
-        <div className="action-bar">
-          <button
-            className={`edit-toggle-btn ${style.isEditing ? 'active' : ''}`}
-            onClick={() => dispatch({ type: style.isEditing ? 'stopEdit' : 'startEdit' })}
-          >
-            {style.isEditing ? '完成' : '编辑'}
-          </button>
-        </div>
-
-        {/* Entries List */}
-        <div className="entries-container">
-          {filteredEntries.length === 0 && !entries?.length ? (
-            <div className="no-entry">
-              <div className="no-entry-icon">🔐</div>
-              <p className="no-entry-text">暂无账户</p>
-              <p className="no-entry-hint">点击上方"添加账户"按钮开始</p>
-            </div>
-          ) : filteredEntries.length === 0 ? (
-            <div className="no-entry">
-              <div className="no-entry-icon">🔍</div>
-              <p className="no-entry-text">未找到匹配的账户</p>
-              <p className="no-entry-hint">尝试其他搜索词</p>
-            </div>
-          ) : (
-            filteredEntries.map((entry: OTPEntryInterface) => (
-              <EntryComponent
-                key={entry.hash}
-                entry={entry}
-                filtered={false}
-                notSearched={searchText !== '' &&
-                  !entry.issuer.toLowerCase().includes(searchText.toLowerCase()) &&
-                  (!entry.account || !entry.account.toLowerCase().includes(searchText.toLowerCase()))
-                }
-                tabindex={getTabindex(entry)}
-              />
-            ))
-          )}
-        </div>
       </div>
+
+      {/* Action Bar */}
+      <div className="action-bar">
+        <div className="accounts-count">
+          {filteredEntries.length} {filteredEntries.length === 1 ? t('account') : t('accounts')}
+        </div>
+        <button
+          className={`edit-btn ${style.isEditing ? 'active' : ''}`}
+          onClick={handleToggleEdit}
+        >
+          {style.isEditing ? t('done') : t('edit')}
+        </button>
+      </div>
+
+      {/* Entries List */}
+      <div
+        className="entries-container"
+        ref={containerRef}
+        onKeyDown={handleKeyDown}
+      >
+        {filteredEntries.length === 0 && !entries?.length ? (
+          <div className="no-entry">
+            <div className="no-entry-icon">
+              <KeyIcon />
+            </div>
+            <p className="no-entry-text">{t('no_accounts_yet')}</p>
+            <p className="no-entry-hint">{t('tap_to_add')}</p>
+          </div>
+        ) : filteredEntries.length === 0 ? (
+          <div className="no-entry">
+            <div className="no-entry-icon">
+              <SearchIcon />
+            </div>
+            <p className="no-entry-text">{t('no_matching_accounts')}</p>
+            <p className="no-entry-hint">{t('try_different_search')}</p>
+          </div>
+        ) : (
+          filteredEntries.map((entry: OTPEntryInterface) => (
+            <EntryComponent
+              key={entry.hash}
+              entry={entry}
+              filtered={false}
+              notSearched={searchText !== '' &&
+                !entry.issuer.toLowerCase().includes(searchText.toLowerCase()) &&
+                (!entry.account || !entry.account.toLowerCase().includes(searchText.toLowerCase()))
+              }
+              tabindex={getTabindex(entry)}
+            />
+          ))
+        )}
+      </div>
+
+      {/* Add Account FAB */}
+      {!style.isEditing && (
+        <button
+          className="add-account-fab"
+          onClick={() => setShowAddForm(true)}
+          title={t('add_account')}
+          aria-label={t('add_account')}
+        >
+          <PlusIcon />
+        </button>
+      )}
 
       {/* Add Account Form Modal */}
       {showAddForm && (

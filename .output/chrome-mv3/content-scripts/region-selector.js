@@ -1,0 +1,32 @@
+var regionSelector=(function(){"use strict";function $(n){return n}const M={matches:["<all_urls>"],runAt:"document_idle",main(){chrome.runtime.onMessage.addListener((e,r,o)=>{if(e.action==="startRegionSelection")return n().then(o).catch(i=>o({error:i.message})),!0});function n(){return new Promise((e,r)=>{const o=document.createElement("div");o.id="auths-region-selector-overlay",o.style.cssText=`
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100vh;
+          background: rgba(0, 0, 0, 0.3);
+          cursor: crosshair;
+          z-index: 2147483647;
+          user-select: none;
+        `;const i=document.createElement("div");i.id="auths-selection-box",i.style.cssText=`
+          position: fixed;
+          border: 2px dashed #2563eb;
+          background: rgba(37, 99, 235, 0.1);
+          pointer-events: none;
+          display: none;
+          z-index: 2147483647;
+        `;const c=document.createElement("div");c.id="auths-tooltip",c.textContent=chrome.i18n.getMessage("qr_region_instruction")||"Click and drag to select QR code area. Press ESC to cancel.",c.style.cssText=`
+          position: fixed;
+          top: 20px;
+          left: 50%;
+          transform: translateX(-50%);
+          background: rgba(0, 0, 0, 0.8);
+          color: white;
+          padding: 12px 24px;
+          border-radius: 8px;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+          font-size: 14px;
+          z-index: 2147483647;
+          pointer-events: none;
+        `,document.body.appendChild(o),document.body.appendChild(i),document.body.appendChild(c);let u=0,l=0,d=!1;const s=()=>{o.remove(),i.remove(),c.remove(),document.removeEventListener("keydown",h)},h=a=>{a.key==="Escape"&&(s(),r(new Error("Selection cancelled")))};document.addEventListener("keydown",h),o.addEventListener("mousedown",a=>{d=!0,u=a.clientX,l=a.clientY,i.style.left=`${u}px`,i.style.top=`${l}px`,i.style.width="0px",i.style.height="0px",i.style.display="block"}),o.addEventListener("mousemove",a=>{if(!d)return;const g=a.clientX,p=a.clientY,y=Math.min(u,g),S=Math.min(l,p),v=Math.abs(g-u),w=Math.abs(p-l);i.style.left=`${y}px`,i.style.top=`${S}px`,i.style.width=`${v}px`,i.style.height=`${w}px`}),o.addEventListener("mouseup",async a=>{if(!d)return;d=!1;const g=a.clientX,p=a.clientY,y=Math.min(u,g),S=Math.min(l,p),v=Math.abs(g-u),w=Math.abs(p-l);if(v<20||w<20){s(),r(new Error("Selection too small"));return}o.style.display="none",i.style.display="none",c.style.display="none",await new Promise(m=>requestAnimationFrame(m));try{const m=await chrome.runtime.sendMessage({action:"captureVisibleTab"});if(m.error){s(),r(new Error(m.error));return}const N=await t(m.dataUrl,y,S,v,w);s(),e({imageData:N,x:y,y:S,width:v,height:w})}catch(m){s(),r(m)}})})}async function t(e,r,o,i,c){return new Promise((u,l)=>{const d=new Image;d.onload=()=>{const s=window.devicePixelRatio||1,h=document.createElement("canvas");h.width=i*s,h.height=c*s;const a=h.getContext("2d");if(!a){l(new Error("Canvas not available"));return}a.drawImage(d,r*s,o*s,i*s,c*s,0,0,i*s,c*s),u(h.toDataURL("image/png"))},d.onerror=()=>{l(new Error("Failed to load image"))},d.src=e})}}},T=globalThis.browser?.runtime?.id?globalThis.browser:globalThis.chrome;function f(n,...t){}const C={debug:(...n)=>f(console.debug,...n),log:(...n)=>f(console.log,...n),warn:(...n)=>f(console.warn,...n),error:(...n)=>f(console.error,...n)};class x extends Event{constructor(t,e){super(x.EVENT_NAME,{}),this.newUrl=t,this.oldUrl=e}static EVENT_NAME=I("wxt:locationchange")}function I(n){return`${T?.runtime?.id}:region-selector:${n}`}function L(n){let t,e;return{run(){t==null&&(e=new URL(location.href),t=n.setInterval(()=>{let r=new URL(location.href);r.href!==e.href&&(window.dispatchEvent(new x(r,e)),e=r)},1e3))}}}class b{constructor(t,e){this.contentScriptName=t,this.options=e,this.abortController=new AbortController,this.isTopFrame?(this.listenForNewerScripts({ignoreFirstEvent:!0}),this.stopOldScripts()):this.listenForNewerScripts()}static SCRIPT_STARTED_MESSAGE_TYPE=I("wxt:content-script-started");isTopFrame=window.self===window.top;abortController;locationWatcher=L(this);receivedMessageIds=new Set;get signal(){return this.abortController.signal}abort(t){return this.abortController.abort(t)}get isInvalid(){return T.runtime.id==null&&this.notifyInvalidated(),this.signal.aborted}get isValid(){return!this.isInvalid}onInvalidated(t){return this.signal.addEventListener("abort",t),()=>this.signal.removeEventListener("abort",t)}block(){return new Promise(()=>{})}setInterval(t,e){const r=setInterval(()=>{this.isValid&&t()},e);return this.onInvalidated(()=>clearInterval(r)),r}setTimeout(t,e){const r=setTimeout(()=>{this.isValid&&t()},e);return this.onInvalidated(()=>clearTimeout(r)),r}requestAnimationFrame(t){const e=requestAnimationFrame((...r)=>{this.isValid&&t(...r)});return this.onInvalidated(()=>cancelAnimationFrame(e)),e}requestIdleCallback(t,e){const r=requestIdleCallback((...o)=>{this.signal.aborted||t(...o)},e);return this.onInvalidated(()=>cancelIdleCallback(r)),r}addEventListener(t,e,r,o){e==="wxt:locationchange"&&this.isValid&&this.locationWatcher.run(),t.addEventListener?.(e.startsWith("wxt:")?I(e):e,r,{...o,signal:this.signal})}notifyInvalidated(){this.abort("Content script context invalidated"),C.debug(`Content script "${this.contentScriptName}" context invalidated`)}stopOldScripts(){window.postMessage({type:b.SCRIPT_STARTED_MESSAGE_TYPE,contentScriptName:this.contentScriptName,messageId:Math.random().toString(36).slice(2)},"*")}verifyScriptStartedEvent(t){const e=t.data?.type===b.SCRIPT_STARTED_MESSAGE_TYPE,r=t.data?.contentScriptName===this.contentScriptName,o=!this.receivedMessageIds.has(t.data?.messageId);return e&&r&&o}listenForNewerScripts(t){let e=!0;const r=o=>{if(this.verifyScriptStartedEvent(o)){this.receivedMessageIds.add(o.data.messageId);const i=e;if(e=!1,i&&t?.ignoreFirstEvent)return;this.notifyInvalidated()}};addEventListener("message",r),this.onInvalidated(()=>removeEventListener("message",r))}}function k(){}function E(n,...t){}const F={debug:(...n)=>E(console.debug,...n),log:(...n)=>E(console.log,...n),warn:(...n)=>E(console.warn,...n),error:(...n)=>E(console.error,...n)};return(async()=>{try{const{main:n,...t}=M,e=new b("region-selector",t);return await n(e)}catch(n){throw F.error('The content script "region-selector" crashed on startup!',n),n}})()})();
+regionSelector;

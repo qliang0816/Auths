@@ -1,26 +1,62 @@
 import React from 'react';
-import { useStyle, useMenu } from '../../store';
+import { useI18n } from '../../i18n';
+
+// SVG Icons
+const ShieldIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 22C12 22 20 18 20 12V5L12 2L4 5V12C4 18 12 22 12 22Z" fill="currentColor"/>
+    <path d="M9 12L11 14L15 10" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const LockIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="3" y="11" width="18" height="11" rx="2" fill="currentColor"/>
+    <path d="M7 11V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V11" stroke="currentColor" strokeWidth="2"/>
+  </svg>
+);
+
+const SettingsIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="3" fill="currentColor"/>
+    <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
 
 interface MainHeaderProps {
   onSettingsClick?: () => void;
+  onLockClick?: () => void;
 }
 
-export default function MainHeader({ onSettingsClick }: MainHeaderProps) {
-  const { style } = useStyle();
-  const { menu } = useMenu();
+export default function MainHeader({ onSettingsClick, onLockClick }: MainHeaderProps) {
+  const { t } = useI18n();
 
   return (
-    <header className="header">
-      <div className="app-name">Auths</div>
+    <header className="main-header">
+      <div className="header-title">
+        <div className="logo">
+          <ShieldIcon />
+        </div>
+        <span className="app-name">{t('appName')}</span>
+      </div>
       <div className="header-actions">
+        {onLockClick && (
+          <button
+            className="icon-btn"
+            onClick={onLockClick}
+            title={t('lock')}
+            aria-label={t('lock')}
+          >
+            <LockIcon />
+          </button>
+        )}
         <button
-          className="icon settings-button"
+          className="icon-btn"
           onClick={onSettingsClick}
-          title="设置"
+          title={t('settings')}
+          aria-label={t('settings')}
         >
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20">
-            <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94l-.36-2.54c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.07.62-.07.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
-          </svg>
+          <SettingsIcon />
         </button>
       </div>
     </header>

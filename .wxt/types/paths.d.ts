@@ -5,9 +5,9 @@ declare module "wxt/browser" {
   export type PublicPath =
     | ""
     | "/"
-    | "/_locales/en/messages.json"
     | "/_locales/zh_CN/messages.json"
     | "/background.js"
+    | "/content-scripts/region-selector.js"
     | "/images/icon.svg"
     | "/images/icon128.png"
     | "/images/icon16.png"

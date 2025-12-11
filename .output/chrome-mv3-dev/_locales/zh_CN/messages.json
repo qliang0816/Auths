@@ -519,6 +519,321 @@
     "message": "Password incorrect"
   },
   "activate_auto_filter": {
-    "message": "Warning: Smart filter loosely matches the domain name to an account. Always verify that you are on the correct website before entering a code!"
+    "message": "警告：智能过滤器会宽松匹配域名到账户。在输入验证码前，请始终确认您在正确的网站上！"
+  },
+  "appName": {
+    "message": "Auths"
+  },
+  "back": {
+    "message": "返回"
+  },
+  "general": {
+    "message": "通用"
+  },
+  "appearance": {
+    "message": "外观"
+  },
+  "theme_default": {
+    "message": "默认"
+  },
+  "zoom": {
+    "message": "缩放"
+  },
+  "features": {
+    "message": "功能"
+  },
+  "enable_autofill": {
+    "message": "启用自动填充"
+  },
+  "autofill_description": {
+    "message": "自动将验证码填充到网站"
+  },
+  "smart_filter_description": {
+    "message": "根据当前网站自动筛选账户"
+  },
+  "context_menu_description": {
+    "message": "将身份验证器添加到浏览器右键菜单"
+  },
+  "password_protection": {
+    "message": "密码保护"
+  },
+  "auto_lock": {
+    "message": "自动锁定"
+  },
+  "disabled": {
+    "message": "禁用"
+  },
+  "minute": {
+    "message": "分钟"
+  },
+  "hour": {
+    "message": "小时"
+  },
+  "auto_lock_description": {
+    "message": "在一段时间不活动后自动锁定扩展"
+  },
+  "reset_password": {
+    "message": "重置密码"
+  },
+  "reset_password_warning": {
+    "message": "这将清除所有数据并重置扩展。此操作无法撤销。"
+  },
+  "reset_password_confirm": {
+    "message": "确定要重置所有数据吗？此操作无法撤销。"
+  },
+  "password_reset": {
+    "message": "所有数据已重置。"
+  },
+  "privacy": {
+    "message": "隐私"
+  },
+  "clear_all_data": {
+    "message": "清除所有数据"
+  },
+  "clear_all_data_warning": {
+    "message": "这将永久删除您的所有账户和设置。"
+  },
+  "clear_all_data_confirm": {
+    "message": "确定要删除所有数据吗？此操作无法撤销。"
+  },
+  "all_data_cleared": {
+    "message": "所有数据已清除。"
+  },
+  "backup_restore": {
+    "message": "备份与恢复"
+  },
+  "manage_backups": {
+    "message": "管理备份"
+  },
+  "backup_description": {
+    "message": "导出或导入您的账户数据"
+  },
+  "version": {
+    "message": "版本"
+  },
+  "developer": {
+    "message": "开发者"
+  },
+  "license": {
+    "message": "许可证"
+  },
+  "github": {
+    "message": "GitHub"
+  },
+  "report_issue": {
+    "message": "报告问题"
+  },
+  "help": {
+    "message": "帮助"
+  },
+  "search_accounts": {
+    "message": "搜索账户..."
+  },
+  "clear": {
+    "message": "清除"
+  },
+  "accounts": {
+    "message": "个账户"
+  },
+  "done": {
+    "message": "完成"
+  },
+  "no_accounts_yet": {
+    "message": "暂无账户"
+  },
+  "tap_to_add": {
+    "message": "点击 + 添加您的第一个账户"
+  },
+  "no_matching_accounts": {
+    "message": "没有匹配的账户"
+  },
+  "try_different_search": {
+    "message": "尝试其他搜索词"
+  },
+  "add_account": {
+    "message": "添加账户"
+  },
+  "account_name": {
+    "message": "账户名称"
+  },
+  "account_name_placeholder": {
+    "message": "例如 Google、GitHub"
+  },
+  "username_optional": {
+    "message": "用户名（可选）"
+  },
+  "username_placeholder": {
+    "message": "例如 user@example.com"
+  },
+  "secret_key": {
+    "message": "密钥"
+  },
+  "secret_key_placeholder": {
+    "message": "输入您的密钥"
+  },
+  "refresh_period": {
+    "message": "刷新周期"
+  },
+  "seconds": {
+    "message": "秒"
+  },
+  "code_length": {
+    "message": "验证码长度"
+  },
+  "please_enter_account_name": {
+    "message": "请输入账户名称"
+  },
+  "please_enter_secret_key": {
+    "message": "请输入密钥"
+  },
+  "invalid_secret_key": {
+    "message": "密钥格式无效"
+  },
+  "add": {
+    "message": "添加"
+  },
+  "scan_qr_code": {
+    "message": "扫描二维码"
+  },
+  "pin": {
+    "message": "置顶"
+  },
+  "unpin": {
+    "message": "取消置顶"
+  },
+  "delete": {
+    "message": "删除"
+  },
+  "delete_confirm": {
+    "message": "确定要删除 {name} 吗？"
+  },
+  "counter": {
+    "message": "计数器"
+  },
+  "password_setup": {
+    "message": "设置密码"
+  },
+  "password_setup_description": {
+    "message": "创建密码以保护您的账户"
+  },
+  "create_password": {
+    "message": "创建密码"
+  },
+  "confirm_password": {
+    "message": "确认密码"
+  },
+  "set_password": {
+    "message": "设置密码"
+  },
+  "skip": {
+    "message": "跳过"
+  },
+  "password_mismatch": {
+    "message": "密码不匹配"
+  },
+  "password_setup_failed": {
+    "message": "设置密码失败"
+  },
+  "unlock": {
+    "message": "解锁"
+  },
+  "enter_password": {
+    "message": "输入您的密码"
+  },
+  "forgot_password": {
+    "message": "忘记密码？"
+  },
+  "forgot_password_confirm": {
+    "message": "这将重置所有数据。确定吗？"
+  },
+  "too_many_attempts": {
+    "message": "尝试次数过多，请稍后再试。"
+  },
+  "qr_scanner_description": {
+    "message": "在当前网页上框选二维码区域或上传图片文件。"
+  },
+  "qr_capture_screen": {
+    "message": "截取屏幕"
+  },
+  "qr_capture_screen_desc": {
+    "message": "从当前网页扫描二维码"
+  },
+  "qr_upload_image": {
+    "message": "上传图片"
+  },
+  "qr_upload_image_desc": {
+    "message": "选择二维码图片文件"
+  },
+  "qr_error_not_otp_url": {
+    "message": "此二维码不是有效的验证器码。需要 otpauth:// 格式的 URL。"
+  },
+  "qr_error_unsupported_type": {
+    "message": "不支持的 OTP 类型。仅支持 TOTP 和 HOTP。"
+  },
+  "qr_error_no_secret": {
+    "message": "二维码中未找到密钥。"
+  },
+  "qr_error_invalid_secret": {
+    "message": "密钥格式无效。必须是 Base32 编码。"
+  },
+  "qr_error_invalid_period": {
+    "message": "刷新周期无效。必须在 1 到 300 秒之间。"
+  },
+  "qr_error_invalid_digits": {
+    "message": "验证码长度无效。必须在 4 到 10 位之间。"
+  },
+  "qr_error_parse_failed": {
+    "message": "无法解析二维码数据。"
+  },
+  "qr_error_unknown": {
+    "message": "扫描时发生未知错误。"
+  },
+  "qr_error_no_active_tab": {
+    "message": "未找到活动标签页。请重试。"
+  },
+  "qr_error_capture_permission": {
+    "message": "权限被拒绝。请允许屏幕截取权限。"
+  },
+  "qr_error_capture_failed": {
+    "message": "屏幕截取失败。请重试。"
+  },
+  "qr_error_canvas_unavailable": {
+    "message": "Canvas 不可用。请重试。"
+  },
+  "qr_error_not_found": {
+    "message": "图片中未找到二维码。请确保二维码清晰可见。"
+  },
+  "qr_error_image_load_failed": {
+    "message": "图片加载失败。请尝试其他文件。"
+  },
+  "qr_error_not_image": {
+    "message": "所选文件不是图片。请选择图片文件。"
+  },
+  "qr_error_file_too_large": {
+    "message": "文件过大。最大支持 10MB。"
+  },
+  "qr_error_file_read_failed": {
+    "message": "文件读取失败。请重试。"
+  },
+  "qr_unknown_issuer": {
+    "message": "未知"
+  },
+  "qr_select_region": {
+    "message": "框选区域"
+  },
+  "qr_select_region_desc": {
+    "message": "在页面上拖动鼠标框选二维码区域"
+  },
+  "qr_region_instruction": {
+    "message": "拖动鼠标框选二维码区域，按 ESC 取消。"
+  },
+  "qr_error_restricted_page": {
+    "message": "无法在此页面扫描，请在普通网页上尝试。"
+  },
+  "qr_error_selection_too_small": {
+    "message": "选择区域太小，请选择更大的区域。"
+  },
+  "qr_error_connection_failed": {
+    "message": "无法连接到页面，请刷新页面后重试。"
   }
 }

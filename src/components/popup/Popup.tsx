@@ -1,37 +1,31 @@
 import React, { useState, useEffect } from 'react';
-import { useStyle, useMenu, useQr, useNotification } from '../../store';
+import { useStyle, useMenu, useNotification } from '../../store';
+import { useI18n } from '../../i18n';
 import MainHeader from './MainHeader';
 import MainBody from './MainBody';
-import MenuPage from './MenuPage';
-import PageHandler from './PageHandler';
-import NotificationHandler from './NotificationHandler';
 import Settings from './Settings';
-import PasswordSetup from './PasswordSetup';
 import PasswordUnlock from './PasswordUnlock';
 
 export default function Popup() {
   const { style } = useStyle();
   const { menu } = useMenu();
-  const { qr } = useQr();
   const { notification } = useNotification();
+  const { t } = useI18n();
   const [hideoutline, setHideoutline] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
-  const [needsPasswordSetup, setNeedsPasswordSetup] = useState(false);
   const [unlockAttempts, setUnlockAttempts] = useState(0);
   const [lastActivity, setLastActivity] = useState(Date.now());
 
-  // Check if password is set on mount
+  // Check if locked on mount
   useEffect(() => {
-    const checkPasswordSetup = async () => {
+    const checkLockStatus = async () => {
       const result = await chrome.storage.local.get(['hasPassword', 'isLocked']);
-      if (!result.hasPassword) {
-        setNeedsPasswordSetup(true);
-      } else if (result.isLocked) {
+      if (result.hasPassword && result.isLocked) {
         setIsLocked(true);
       }
     };
-    checkPasswordSetup();
+    checkLockStatus();
   }, []);
 
   // Auto-lock timer
@@ -91,30 +85,6 @@ export default function Popup() {
     setHideoutline(false);
   };
 
-  const handleHideQr = () => {
-    const { dispatch } = useQr();
-    dispatch({ type: 'clearQrData' });
-  };
-
-  const handlePasswordSetup = async (password: string) => {
-    try {
-      // Hash and store password (simplified - use proper encryption in production)
-      const passwordHash = btoa(password); // Base64 encode (use proper hashing!)
-
-      await chrome.storage.local.set({
-        passwordHash,
-        hasPassword: true,
-        isLocked: false
-      });
-
-      setNeedsPasswordSetup(false);
-      setIsLocked(false);
-    } catch (err) {
-      console.error('Failed to set password:', err);
-      alert('密码设置失败');
-    }
-  };
-
   const handlePasswordUnlock = async (password: string) => {
     try {
       const result = await chrome.storage.local.get(['passwordHash']);
@@ -128,7 +98,7 @@ export default function Popup() {
       } else {
         setUnlockAttempts(prev => prev + 1);
         if (unlockAttempts >= 4) {
-          alert('密码错误次数过多，请稍后重试');
+          alert(t('too_many_attempts'));
         }
       }
     } catch (err) {
@@ -138,37 +108,22 @@ export default function Popup() {
   };
 
   const handleLock = async () => {
-    await chrome.storage.local.set({ isLocked: true });
-    setIsLocked(true);
-  };
-
-  const handleSkipPasswordSetup = () => {
-    setNeedsPasswordSetup(false);
+    const result = await chrome.storage.local.get(['hasPassword']);
+    if (result.hasPassword) {
+      await chrome.storage.local.set({ isLocked: true });
+      setIsLocked(true);
+    }
   };
 
   const handleForgotPassword = () => {
-    if (confirm('忘记密码将清除所有数据。确定要继续吗？')) {
+    if (confirm(t('forgot_password_confirm'))) {
       chrome.storage.local.clear(() => {
         window.location.reload();
       });
     }
   };
 
-  // Show password setup screen
-  if (needsPasswordSetup) {
-    return (
-      <div className={`${getThemeClass()} ${hideoutline ? 'hideoutline' : ''}`}>
-        <div className="full-screen-modal">
-          <PasswordSetup
-            onSetPassword={handlePasswordSetup}
-            onCancel={handleSkipPasswordSetup}
-          />
-        </div>
-      </div>
-    );
-  }
-
-  // Show unlock screen
+  // Show unlock screen (only when password is set and locked)
   if (isLocked) {
     return (
       <div className={`${getThemeClass()} ${hideoutline ? 'hideoutline' : ''}`}>
@@ -199,43 +154,18 @@ export default function Popup() {
       onMouseDown={handleMouseDown}
       onKeyDown={handleKeyDown}
     >
-      <MainHeader onSettingsClick={() => setShowSettings(true)} />
-      <div
-        className={`${style.timeout && !style.isEditing ? 'timeout' : ''} ${style.isEditing ? 'edit' : ''}`}
-      >
-        <MainBody />
-      </div>
+      <MainHeader
+        onSettingsClick={() => setShowSettings(true)}
+        onLockClick={handleLock}
+      />
+      <MainBody />
 
-      <div
-        className={`${style.slidein ? 'slidein' : ''} ${style.slideout ? 'slideout' : ''}`}
-      >
-        <MenuPage />
-      </div>
-
-      <div
-        className={`${style.fadein ? 'fadein' : ''} ${style.fadeout ? 'fadeout' : ''} ${style.show ? 'show' : ''}`}
-      >
-        <PageHandler />
-      </div>
-
-      <NotificationHandler />
-
-      {/* EPHERMAL MESSAGE */}
-      <div
-        className={`notification ${style.notificationFadein ? 'fadein' : ''} ${style.notificationFadeout ? 'fadeout' : ''}`}
-      >
-        {notification.message}
-      </div>
-
-      {/* QR */}
-      <div
-        className={`qr ${style.qrfadein ? 'qrfadein' : ''} ${style.qrfadeout ? 'qrfadeout' : ''}`}
-        style={{ backgroundImage: qr.data }}
-        onClick={handleHideQr}
-      ></div>
-
-      {/* CLIPBOARD */}
-      <input type="text" id="codeClipboard" tabIndex={-1} />
+      {/* Notification Toast */}
+      {notification.message && (
+        <div className="notification-toast">
+          {notification.message}
+        </div>
+      )}
     </div>
   );
 }

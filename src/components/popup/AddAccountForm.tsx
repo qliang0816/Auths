@@ -1,5 +1,25 @@
 import React, { useState } from 'react';
 import { useAccounts } from '../../store';
+import { useI18n } from '../../i18n';
+
+// SVG Icons
+const CloseIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 6L18 18M6 18L18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+
+const QRCodeIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
+    <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
+    <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" strokeWidth="2"/>
+    <rect x="14" y="14" width="3" height="3" fill="currentColor"/>
+    <rect x="18" y="14" width="3" height="3" fill="currentColor"/>
+    <rect x="14" y="18" width="3" height="3" fill="currentColor"/>
+    <rect x="18" y="18" width="3" height="3" fill="currentColor"/>
+  </svg>
+);
 
 interface AddAccountFormProps {
   onClose: () => void;
@@ -14,6 +34,7 @@ export default function AddAccountForm({ onClose, onScanQR }: AddAccountFormProp
   const [digits, setDigits] = useState(6);
   const [error, setError] = useState('');
   const { dispatch } = useAccounts();
+  const { t } = useI18n();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -21,19 +42,19 @@ export default function AddAccountForm({ onClose, onScanQR }: AddAccountFormProp
 
     // Validate inputs
     if (!issuer.trim()) {
-      setError('请输入账户名称');
+      setError(t('please_enter_account_name'));
       return;
     }
 
     if (!secret.trim()) {
-      setError('请输入密钥');
+      setError(t('please_enter_secret_key'));
       return;
     }
 
     // Validate Base32 secret
     const base32Regex = /^[A-Z2-7]+=*$/i;
     if (!base32Regex.test(secret.trim())) {
-      setError('密钥格式不正确（应为Base32编码）');
+      setError(t('invalid_secret_key'));
       return;
     }
 
@@ -57,71 +78,71 @@ export default function AddAccountForm({ onClose, onScanQR }: AddAccountFormProp
   return (
     <div className="add-account-form">
       <div className="form-header">
-        <h2>添加账户</h2>
-        <button className="close-btn" onClick={onClose} title="关闭">
-          ✕
+        <h2>{t('add_account')}</h2>
+        <button className="icon-btn" onClick={onClose} title={t('close')} aria-label={t('close')}>
+          <CloseIcon />
         </button>
       </div>
 
       <form onSubmit={handleSubmit}>
         <div className="form-group">
-          <label htmlFor="issuer">账户名称 *</label>
+          <label htmlFor="issuer">{t('account_name')} *</label>
           <input
             type="text"
             id="issuer"
             value={issuer}
             onChange={(e) => setIssuer(e.target.value)}
-            placeholder="例如：Google、GitHub"
+            placeholder={t('account_name_placeholder')}
             required
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="account">用户名（可选）</label>
+          <label htmlFor="account">{t('username_optional')}</label>
           <input
             type="text"
             id="account"
             value={account}
             onChange={(e) => setAccount(e.target.value)}
-            placeholder="例如：user@example.com"
+            placeholder={t('username_placeholder')}
           />
         </div>
 
         <div className="form-group">
-          <label htmlFor="secret">密钥 (Base32) *</label>
+          <label htmlFor="secret">{t('secret_key')} *</label>
           <input
             type="text"
             id="secret"
             value={secret}
             onChange={(e) => setSecret(e.target.value.toUpperCase())}
-            placeholder="JBSWY3DPEHPK3PXP"
+            placeholder={t('secret_key_placeholder')}
             required
-            style={{ fontFamily: 'monospace' }}
+            style={{ fontFamily: 'var(--font-mono)', letterSpacing: '1px' }}
           />
         </div>
 
         <div className="form-row">
           <div className="form-group">
-            <label htmlFor="period">刷新周期（秒）</label>
+            <label htmlFor="period">{t('refresh_period')}</label>
             <select
               id="period"
               value={period}
               onChange={(e) => setPeriod(Number(e.target.value))}
             >
-              <option value={30}>30秒</option>
-              <option value={60}>60秒</option>
+              <option value={30}>30 {t('seconds')}</option>
+              <option value={60}>60 {t('seconds')}</option>
             </select>
           </div>
 
           <div className="form-group">
-            <label htmlFor="digits">验证码位数</label>
+            <label htmlFor="digits">{t('code_length')}</label>
             <select
               id="digits"
               value={digits}
               onChange={(e) => setDigits(Number(e.target.value))}
             >
-              <option value={6}>6位</option>
-              <option value={8}>8位</option>
+              <option value={6}>6 {t('digits')}</option>
+              <option value={8}>8 {t('digits')}</option>
             </select>
           </div>
         </div>
@@ -130,10 +151,11 @@ export default function AddAccountForm({ onClose, onScanQR }: AddAccountFormProp
 
         <div className="form-actions">
           <button type="button" className="btn-secondary" onClick={onScanQR}>
-            扫描二维码
+            <QRCodeIcon />
+            {t('scan_qr_code')}
           </button>
           <button type="submit" className="btn-primary">
-            添加
+            {t('add')}
           </button>
         </div>
       </form>

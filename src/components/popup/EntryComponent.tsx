@@ -1,6 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { useAccounts, useStyle } from '../../store';
+import { useI18n } from '../../i18n';
 import { KeyUtilities } from '../../models/key-utilities';
+
+// SVG Icons
+const PinIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2L15 8L21 9L16.5 14L18 21L12 17L6 21L7.5 14L3 9L9 8L12 2Z" fill="currentColor"/>
+  </svg>
+);
+
+const TrashIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M3 6H5H21" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M8 6V4C8 3.44772 8.44772 3 9 3H15C15.5523 3 16 3.44772 16 4V6" stroke="currentColor" strokeWidth="2"/>
+    <path d="M19 6V20C19 20.5523 18.5523 21 18 21H6C5.44772 21 5 20.5523 5 20V6" stroke="currentColor" strokeWidth="2"/>
+    <path d="M10 11V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M14 11V17" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+
+const CheckIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M5 12L10 17L20 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
 
 // Use OTPEntryInterface from global declarations
 declare global {
@@ -25,6 +49,13 @@ interface EntryComponentProps {
   tabindex?: number;
 }
 
+// Format code with space in the middle (e.g., "123 456")
+function formatCode(code: string): string {
+  if (!code || code.length < 4) return code;
+  const mid = Math.floor(code.length / 2);
+  return `${code.slice(0, mid)} ${code.slice(mid)}`;
+}
+
 export default function EntryComponent({
   entry,
   filtered = false,
@@ -33,6 +64,7 @@ export default function EntryComponent({
 }: EntryComponentProps) {
   const { dispatch } = useAccounts();
   const { style } = useStyle();
+  const { t } = useI18n();
   const [code, setCode] = useState(entry.code);
   const [timeLeft, setTimeLeft] = useState(0);
   const [progress, setProgress] = useState(100);
@@ -105,7 +137,7 @@ export default function EntryComponent({
 
   const handleDelete = (e: React.MouseEvent) => {
     e.stopPropagation();
-    if (confirm(`确定要删除账户 "${entry.issuer}" 吗？`)) {
+    if (confirm(t('delete_confirm').replace('{name}', entry.issuer))) {
       dispatch({ type: 'deleteCode', payload: entry.hash });
     }
   };
@@ -114,26 +146,60 @@ export default function EntryComponent({
   const isEncrypted = entry.secret === null;
   const isLowTime = timeLeft <= 5 && entry.type === 1;
 
+  const classNames = [
+    'entry',
+    entry.pinned ? 'pinned' : '',
+    filtered ? 'filtered' : '',
+    notSearched ? 'not-searched' : '',
+    isLowTime ? 'timeout' : ''
+  ].filter(Boolean).join(' ');
+
   return (
     <div
-      className={`entry ${entry.pinned ? 'pinned' : ''} ${filtered ? 'filtered' : ''} ${notSearched ? 'not-searched' : ''} ${isLowTime ? 'timeout' : ''}`}
+      className={classNames}
       tabIndex={tabindex}
       onClick={handleCopy}
-      style={{ cursor: 'pointer' }}
+      role="button"
+      aria-label={`Copy code for ${entry.issuer}`}
     >
-      {/* Account Info */}
-      <div className="issuer">
-        {entry.pinned && <span className="pin-icon">📌</span>}
-        {entry.issuer || 'Unknown'}
-      </div>
+      {/* Entry Header */}
+      <div className="entry-header">
+        <div className="entry-info">
+          <div className="issuer">
+            {entry.pinned && <span className="pin-badge">★</span>}
+            {entry.issuer || 'Unknown'}
+          </div>
+          {entry.account && (
+            <div className="account">{entry.account}</div>
+          )}
+        </div>
 
-      {entry.account && (
-        <div className="account">{entry.account}</div>
-      )}
+        {/* Edit Mode Actions */}
+        {style.isEditing && (
+          <div className="entry-actions" style={{ opacity: 1 }}>
+            <button
+              className="action-btn pin-btn"
+              onClick={handlePin}
+              title={entry.pinned ? t('unpin') : t('pin')}
+              aria-label={entry.pinned ? t('unpin') : t('pin')}
+            >
+              <PinIcon />
+            </button>
+            <button
+              className="action-btn delete-btn"
+              onClick={handleDelete}
+              title={t('delete')}
+              aria-label={t('delete')}
+            >
+              <TrashIcon />
+            </button>
+          </div>
+        )}
+      </div>
 
       {/* Code Display */}
       <div className={`code ${isEncrypted ? 'encrypted' : ''}`}>
-        {isEncrypted ? '••••••' : code}
+        {isEncrypted ? '••• •••' : formatCode(code)}
       </div>
 
       {/* Progress Bar and Timer (TOTP only) */}
@@ -142,10 +208,7 @@ export default function EntryComponent({
           <div className="progress-container">
             <div
               className="progress-bar"
-              style={{
-                width: `${progress}%`,
-                backgroundColor: isLowTime ? '#dd4b39' : '#08c'
-              }}
+              style={{ width: `${progress}%` }}
             />
           </div>
           <div className="time-left">{timeLeft}s</div>
@@ -155,34 +218,15 @@ export default function EntryComponent({
       {/* HOTP Counter */}
       {isHOTP && (
         <div className="hotp-counter">
-          Counter: {entry.counter}
+          {t('counter')}: {entry.counter}
         </div>
       )}
 
       {/* Copy Indicator */}
       {copied && (
         <div className="copy-indicator">
-          ✓ 已复制
-        </div>
-      )}
-
-      {/* Edit Mode Actions */}
-      {style.isEditing && (
-        <div className="entry-actions">
-          <button
-            className="action-btn pin-btn"
-            onClick={handlePin}
-            title={entry.pinned ? '取消置顶' : '置顶'}
-          >
-            📌
-          </button>
-          <button
-            className="action-btn delete-btn"
-            onClick={handleDelete}
-            title="删除"
-          >
-            🗑️
-          </button>
+          <CheckIcon />
+          {t('copied')}
         </div>
       )}
     </div>

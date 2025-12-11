@@ -4,7 +4,7 @@
   "description": "__MSG_extDesc__",
   "version": "0.1.0",
   "short_name": "__MSG_extShortName__",
-  "default_locale": "en",
+  "default_locale": "zh_CN",
   "permissions": [
     "activeTab",
     "storage",
@@ -23,6 +23,7 @@
     "https://accounts.google.com/o/oauth2/revoke",
     "https://graph.microsoft.com/me/*",
     "https://login.microsoftonline.com/common/oauth2/v2.0/token",
+    "<all_urls>",
     "http://localhost/*"
   ],
   "commands": {

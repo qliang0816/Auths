@@ -1,6 +1,44 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import jsQR from 'jsqr';
 import { useAccounts } from '../../store';
+import { useI18n } from '../../i18n';
+
+// SVG Icons
+const CloseIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M6 6L18 18M6 18L18 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+
+const RegionSelectIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M4 8V4H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M4 16V20H8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M16 4H20V8" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <path d="M16 20H20V16" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+    <rect x="8" y="8" width="8" height="8" rx="1" stroke="currentColor" strokeWidth="2"/>
+  </svg>
+);
+
+const UploadIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21 15V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M12 3V15M12 3L8 7M12 3L16 7" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const ErrorIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+    <path d="M12 8V12M12 16H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+
+const LoadingIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="spinning">
+    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" strokeDasharray="40" strokeDashoffset="10"/>
+  </svg>
+);
 
 interface QRScannerProps {
   onClose: () => void;
@@ -9,31 +47,30 @@ interface QRScannerProps {
 
 export default function QRScanner({ onClose, onSuccess }: QRScannerProps) {
   const [error, setError] = useState('');
-  const [scanning, setScanning] = useState(false);
-  const [cameraStream, setCameraStream] = useState<MediaStream | null>(null);
-  const videoRef = useRef<HTMLVideoElement>(null);
+  const [loading, setLoading] = useState(false);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
   const { dispatch } = useAccounts();
-
-  useEffect(() => {
-    return () => {
-      // Cleanup camera stream on unmount
-      if (cameraStream) {
-        cameraStream.getTracks().forEach(track => track.stop());
-      }
-    };
-  }, [cameraStream]);
+  const { t } = useI18n();
 
   const parseOtpAuthUrl = (url: string) => {
+    // Check if it's an otpauth URL
+    if (!url.startsWith('otpauth://')) {
+      throw new Error(t('qr_error_not_otp_url'));
+    }
+
     try {
       const urlObj = new URL(url);
 
       if (urlObj.protocol !== 'otpauth:') {
-        throw new Error('不是有效的 OTP Auth URL');
+        throw new Error(t('qr_error_not_otp_url'));
       }
 
       const type = urlObj.host; // totp or hotp
+      if (type !== 'totp' && type !== 'hotp') {
+        throw new Error(t('qr_error_unsupported_type'));
+      }
+
       const label = decodeURIComponent(urlObj.pathname.substring(1));
       const params = new URLSearchParams(urlObj.search);
 
@@ -51,16 +88,32 @@ export default function QRScanner({ onClose, onSuccess }: QRScannerProps) {
 
       const secret = params.get('secret');
       if (!secret) {
-        throw new Error('二维码中未找到密钥');
+        throw new Error(t('qr_error_no_secret'));
+      }
+
+      // Validate Base32 secret
+      const base32Regex = /^[A-Z2-7]+=*$/i;
+      if (!base32Regex.test(secret)) {
+        throw new Error(t('qr_error_invalid_secret'));
       }
 
       const period = parseInt(params.get('period') || '30');
       const digits = parseInt(params.get('digits') || '6');
       const algorithm = params.get('algorithm')?.toUpperCase() || 'SHA1';
 
+      // Validate period
+      if (period < 1 || period > 300) {
+        throw new Error(t('qr_error_invalid_period'));
+      }
+
+      // Validate digits
+      if (digits < 4 || digits > 10) {
+        throw new Error(t('qr_error_invalid_digits'));
+      }
+
       return {
         type: type === 'hotp' ? 2 : 1, // 1=TOTP, 2=HOTP
-        issuer,
+        issuer: issuer || t('qr_unknown_issuer'),
         account,
         secret: secret.toUpperCase(),
         period,
@@ -69,7 +122,10 @@ export default function QRScanner({ onClose, onSuccess }: QRScannerProps) {
         counter: parseInt(params.get('counter') || '0'),
       };
     } catch (err) {
-      throw new Error('无法解析二维码: ' + (err instanceof Error ? err.message : '未知错误'));
+      if (err instanceof Error && err.message.startsWith('qr_error')) {
+        throw err;
+      }
+      throw new Error(t('qr_error_parse_failed'));
     }
   };
 
@@ -84,160 +140,248 @@ export default function QRScanner({ onClose, onSuccess }: QRScannerProps) {
 
       onSuccess();
     } catch (err) {
-      setError(err instanceof Error ? err.message : '扫描失败');
+      setError(err instanceof Error ? err.message : t('qr_error_unknown'));
     }
   };
 
-  const startCamera = async () => {
-    try {
-      setError('');
-      setScanning(true);
+  // Region selection - inject content script and let user select area
+  const handleRegionSelect = async () => {
+    setError('');
+    setLoading(true);
 
-      const stream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'environment' }
+    try {
+      // Get the active tab
+      const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
+
+      if (!tab || !tab.id) {
+        throw new Error(t('qr_error_no_active_tab'));
+      }
+
+      // Check if we can inject script (not on chrome:// pages, etc.)
+      if (tab.url?.startsWith('chrome://') || tab.url?.startsWith('chrome-extension://') || tab.url?.startsWith('edge://')) {
+        throw new Error(t('qr_error_restricted_page'));
+      }
+
+      // Inject the content script if not already injected
+      try {
+        await chrome.scripting.executeScript({
+          target: { tabId: tab.id },
+          files: ['/region-selector.content.js']
+        });
+      } catch (e) {
+        // Script might already be injected, try to continue
+        console.log('Script injection note:', e);
+      }
+
+      // Close the popup window - this allows the user to interact with the page
+      // We'll use a different approach: open a new window for selection
+
+      // Send message to start region selection
+      const response = await chrome.tabs.sendMessage(tab.id, {
+        action: 'startRegionSelection'
       });
 
-      setCameraStream(stream);
+      if (response.error) {
+        if (response.error === 'Selection cancelled') {
+          setLoading(false);
+          return;
+        }
+        throw new Error(response.error);
+      }
 
-      if (videoRef.current) {
-        videoRef.current.srcObject = stream;
-        videoRef.current.play();
-        scanFromVideo();
+      // Process the selected region image
+      if (response.imageData) {
+        await processImage(response.imageData);
       }
     } catch (err) {
-      setError('无法访问摄像头，请检查权限设置');
-      setScanning(false);
+      console.error('Region selection error:', err);
+      if (err instanceof Error) {
+        // Check for specific error types
+        if (err.message.includes('Cannot access') || err.message.includes('chrome://')) {
+          setError(t('qr_error_restricted_page'));
+        } else if (err.message.includes('Selection cancelled')) {
+          // User cancelled, don't show error
+        } else if (err.message.includes('Selection too small')) {
+          setError(t('qr_error_selection_too_small'));
+        } else if (err.message.includes('Could not establish connection')) {
+          setError(t('qr_error_connection_failed'));
+        } else {
+          setError(err.message);
+        }
+      } else {
+        setError(t('qr_error_capture_failed'));
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
-  const stopCamera = () => {
-    if (cameraStream) {
-      cameraStream.getTracks().forEach(track => track.stop());
-      setCameraStream(null);
-    }
-    setScanning(false);
-  };
-
-  const scanFromVideo = () => {
-    if (!videoRef.current || !canvasRef.current || !scanning) {
-      return;
-    }
-
-    const video = videoRef.current;
-    const canvas = canvasRef.current;
-    const context = canvas.getContext('2d');
-
-    if (!context || video.readyState !== video.HAVE_ENOUGH_DATA) {
-      requestAnimationFrame(scanFromVideo);
-      return;
-    }
-
-    canvas.width = video.videoWidth;
-    canvas.height = video.videoHeight;
-    context.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-    const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-    const code = jsQR(imageData.data, imageData.width, imageData.height);
-
-    if (code) {
-      stopCamera();
-      handleQRCodeDetected(code.data);
-    } else {
-      requestAnimationFrame(scanFromVideo);
-    }
-  };
-
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setError('');
-
-    const reader = new FileReader();
-    reader.onload = (event) => {
+  // Process image and detect QR code
+  const processImage = async (dataUrl: string): Promise<void> => {
+    return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
-        if (!canvasRef.current) return;
+        if (!canvasRef.current) {
+          reject(new Error(t('qr_error_canvas_unavailable')));
+          return;
+        }
 
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
-        if (!context) return;
+        if (!context) {
+          reject(new Error(t('qr_error_canvas_unavailable')));
+          return;
+        }
 
         canvas.width = img.width;
         canvas.height = img.height;
         context.drawImage(img, 0, 0);
 
         const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
-        const code = jsQR(imageData.data, imageData.width, imageData.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height, {
+          inversionAttempts: 'dontInvert',
+        });
 
         if (code) {
           handleQRCodeDetected(code.data);
+          resolve();
         } else {
-          setError('未能识别二维码，请确保图片清晰');
+          // Try with inverted colors
+          const invertedCode = jsQR(imageData.data, imageData.width, imageData.height, {
+            inversionAttempts: 'attemptBoth',
+          });
+
+          if (invertedCode) {
+            handleQRCodeDetected(invertedCode.data);
+            resolve();
+          } else {
+            setError(t('qr_error_not_found'));
+            resolve();
+          }
         }
       };
-      img.src = event.target?.result as string;
-    };
-    reader.readAsDataURL(file);
+
+      img.onerror = () => {
+        reject(new Error(t('qr_error_image_load_failed')));
+      };
+
+      img.src = dataUrl;
+    });
+  };
+
+  // Handle file upload
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setError('');
+    setLoading(true);
+
+    // Validate file type
+    if (!file.type.startsWith('image/')) {
+      setError(t('qr_error_not_image'));
+      setLoading(false);
+      return;
+    }
+
+    // Validate file size (max 10MB)
+    if (file.size > 10 * 1024 * 1024) {
+      setError(t('qr_error_file_too_large'));
+      setLoading(false);
+      return;
+    }
+
+    try {
+      const reader = new FileReader();
+
+      reader.onload = async (event) => {
+        const dataUrl = event.target?.result as string;
+        if (dataUrl) {
+          await processImage(dataUrl);
+        }
+        setLoading(false);
+      };
+
+      reader.onerror = () => {
+        setError(t('qr_error_file_read_failed'));
+        setLoading(false);
+      };
+
+      reader.readAsDataURL(file);
+    } catch (err) {
+      setError(t('qr_error_file_read_failed'));
+      setLoading(false);
+    }
+
+    // Reset file input
+    if (fileInputRef.current) {
+      fileInputRef.current.value = '';
+    }
   };
 
   return (
-    <div className="qr-scanner-modal">
-      <div className="qr-scanner-content">
-        <div className="scanner-header">
-          <h2>扫描二维码</h2>
-          <button className="close-btn" onClick={onClose} title="关闭">
-            ✕
+    <div className="qr-scanner">
+      <div className="scanner-header">
+        <h2>{t('scan_qr_code')}</h2>
+        <button
+          className="icon-btn"
+          onClick={onClose}
+          title={t('close')}
+          aria-label={t('close')}
+        >
+          <CloseIcon />
+        </button>
+      </div>
+
+      <div className="scanner-body">
+        <p className="scanner-description">{t('qr_scanner_description')}</p>
+
+        <div className="scanner-options">
+          <button
+            className="scanner-option-btn"
+            onClick={handleRegionSelect}
+            disabled={loading}
+          >
+            <div className="option-icon">
+              {loading ? <LoadingIcon /> : <RegionSelectIcon />}
+            </div>
+            <div className="option-text">
+              <span className="option-title">{t('qr_select_region')}</span>
+              <span className="option-desc">{t('qr_select_region_desc')}</span>
+            </div>
           </button>
+
+          <button
+            className="scanner-option-btn"
+            onClick={() => fileInputRef.current?.click()}
+            disabled={loading}
+          >
+            <div className="option-icon">
+              <UploadIcon />
+            </div>
+            <div className="option-text">
+              <span className="option-title">{t('qr_upload_image')}</span>
+              <span className="option-desc">{t('qr_upload_image_desc')}</span>
+            </div>
+          </button>
+
+          <input
+            ref={fileInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleFileUpload}
+            style={{ display: 'none' }}
+          />
         </div>
 
-        <div className="scanner-body">
-          {scanning ? (
-            <div className="camera-preview">
-              <video ref={videoRef} autoPlay playsInline />
-              <canvas ref={canvasRef} style={{ display: 'none' }} />
-              <button className="btn-stop-camera" onClick={stopCamera}>
-                停止扫描
-              </button>
-            </div>
-          ) : (
-            <div className="scanner-options">
-              <button className="btn-camera" onClick={startCamera}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48">
-                  <path d="M12 15c1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3 1.34 3 3 3zm0-8c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zM9 2L7.17 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2h-3.17L15 2H9z"/>
-                </svg>
-                打开摄像头扫描
-              </button>
+        {error && (
+          <div className="scanner-error">
+            <ErrorIcon />
+            <span>{error}</span>
+          </div>
+        )}
 
-              <div className="divider">或</div>
-
-              <button
-                className="btn-upload"
-                onClick={() => fileInputRef.current?.click()}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="48" height="48">
-                  <path d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z"/>
-                </svg>
-                上传二维码图片
-              </button>
-              <input
-                ref={fileInputRef}
-                type="file"
-                accept="image/*"
-                onChange={handleFileUpload}
-                style={{ display: 'none' }}
-              />
-            </div>
-          )}
-
-          <canvas ref={canvasRef} style={{ display: 'none' }} />
-
-          {error && (
-            <div className="error-message">
-              {error}
-            </div>
-          )}
-        </div>
+        <canvas ref={canvasRef} style={{ display: 'none' }} />
       </div>
     </div>
   );

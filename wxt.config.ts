@@ -7,7 +7,7 @@ export default defineConfig({
     name: '__MSG_extName__',
     short_name: '__MSG_extShortName__',
     description: '__MSG_extDesc__',
-    default_locale: 'en',
+    default_locale: 'zh_CN',
     permissions: ['activeTab', 'storage', 'identity', 'alarms', 'scripting'],
     optional_permissions: ['clipboardWrite'],
     host_permissions: [
@@ -27,5 +27,10 @@ export default defineConfig({
         description: 'Autofill the matched code'
       }
     }
-  }
+  },
+  vite: () => ({
+    define: {
+      global: 'globalThis',
+    },
+  }),
 });

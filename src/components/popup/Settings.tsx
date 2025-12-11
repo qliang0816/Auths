@@ -1,6 +1,43 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useMenu } from '../../store';
+import { useI18n } from '../../i18n';
 import ImportExport from './ImportExport';
+import PasswordSetup from './PasswordSetup';
+
+// SVG Icons
+const ArrowLeftIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const SettingsIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="3" stroke="currentColor" strokeWidth="2"/>
+    <path d="M12 1V3M12 21V23M4.22 4.22L5.64 5.64M18.36 18.36L19.78 19.78M1 12H3M21 12H23M4.22 19.78L5.64 18.36M18.36 5.64L19.78 4.22" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
+
+const LockIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <rect x="3" y="11" width="18" height="11" rx="2" stroke="currentColor" strokeWidth="2"/>
+    <path d="M7 11V7C7 4.23858 9.23858 2 12 2C14.7614 2 17 4.23858 17 7V11" stroke="currentColor" strokeWidth="2"/>
+  </svg>
+);
+
+const BackupIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M21 15V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V15" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M12 3V15M12 15L8 11M12 15L16 11" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
+const InfoIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+    <path d="M12 16V12M12 8H12.01" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+  </svg>
+);
 
 interface SettingsPageProps {
   onClose: () => void;
@@ -8,8 +45,20 @@ interface SettingsPageProps {
 
 export default function SettingsPage({ onClose }: SettingsPageProps) {
   const { menu, dispatch } = useMenu();
+  const { t } = useI18n();
   const [showImportExport, setShowImportExport] = useState(false);
-  const [activeSection, setActiveSection] = useState<'general' | 'security' | 'backup'>('general');
+  const [showPasswordSetup, setShowPasswordSetup] = useState(false);
+  const [hasPassword, setHasPassword] = useState(false);
+  const [activeSection, setActiveSection] = useState<'general' | 'security' | 'backup' | 'about'>('general');
+
+  // Check if password is already set
+  useEffect(() => {
+    const checkPassword = async () => {
+      const result = await chrome.storage.local.get(['hasPassword']);
+      setHasPassword(!!result.hasPassword);
+    };
+    checkPassword();
+  }, []);
 
   const handleThemeChange = (theme: string) => {
     dispatch({ type: 'setTheme', payload: theme });
@@ -22,7 +71,6 @@ export default function SettingsPage({ onClose }: SettingsPageProps) {
   const handleZoomChange = (zoom: number) => {
     dispatch({ type: 'setZoom', payload: zoom });
 
-    // Apply zoom
     if (zoom !== 100) {
       document.body.style.marginBottom = 480 * (zoom / 100 - 1) + "px";
       document.body.style.marginRight = 320 * (zoom / 100 - 1) + "px";
@@ -35,67 +83,82 @@ export default function SettingsPage({ onClose }: SettingsPageProps) {
   };
 
   const handleResetPassword = () => {
-    if (confirm('重置主密码将清除所有已保存的账户数据。确定要继续吗？')) {
-      // Clear all data
+    if (confirm(t('reset_password_confirm'))) {
       chrome.storage.local.clear(() => {
-        alert('主密码已重置，所有数据已清除');
+        alert(t('password_reset'));
         window.location.reload();
       });
     }
   };
 
+  const handleSetPassword = async (password: string) => {
+    try {
+      const passwordHash = btoa(password);
+      await chrome.storage.local.set({
+        passwordHash,
+        hasPassword: true,
+        isLocked: false
+      });
+      setHasPassword(true);
+      setShowPasswordSetup(false);
+    } catch (err) {
+      console.error('Failed to set password:', err);
+      alert(t('password_setup_failed'));
+    }
+  };
+
+  const navItems = [
+    { id: 'general', label: t('general'), icon: <SettingsIcon /> },
+    { id: 'security', label: t('security'), icon: <LockIcon /> },
+    { id: 'backup', label: t('backup'), icon: <BackupIcon /> },
+    { id: 'about', label: t('about'), icon: <InfoIcon /> },
+  ];
+
   return (
     <div className="settings-page">
       <div className="settings-header">
-        <button className="back-btn" onClick={onClose} title="返回">
-          ← 返回
+        <button className="back-btn" onClick={onClose} title={t('back')} aria-label={t('back')}>
+          <ArrowLeftIcon />
+          <span>{t('back')}</span>
         </button>
-        <h2>设置</h2>
+        <h2>{t('settings')}</h2>
       </div>
 
       <div className="settings-nav">
-        <button
-          className={`nav-item ${activeSection === 'general' ? 'active' : ''}`}
-          onClick={() => setActiveSection('general')}
-        >
-          ⚙️ 常规
-        </button>
-        <button
-          className={`nav-item ${activeSection === 'security' ? 'active' : ''}`}
-          onClick={() => setActiveSection('security')}
-        >
-          🔒 安全
-        </button>
-        <button
-          className={`nav-item ${activeSection === 'backup' ? 'active' : ''}`}
-          onClick={() => setActiveSection('backup')}
-        >
-          💾 备份
-        </button>
+        {navItems.map(item => (
+          <button
+            key={item.id}
+            className={`nav-item ${activeSection === item.id ? 'active' : ''}`}
+            onClick={() => setActiveSection(item.id as any)}
+          >
+            {item.icon}
+            <span>{item.label}</span>
+          </button>
+        ))}
       </div>
 
       <div className="settings-content">
         {activeSection === 'general' && (
           <div className="settings-section">
-            <h3>外观</h3>
+            <h3>{t('appearance')}</h3>
 
             <div className="setting-item">
-              <label>主题</label>
+              <label>{t('theme')}</label>
               <select
                 value={menu.theme || 'normal'}
                 onChange={(e) => handleThemeChange(e.target.value)}
               >
-                <option value="normal">默认</option>
-                <option value="dark">深色</option>
-                <option value="simple">简约</option>
-                <option value="compact">紧凑</option>
-                <option value="flat">扁平</option>
-                <option value="accessibility">高对比度</option>
+                <option value="normal">{t('theme_default')}</option>
+                <option value="dark">{t('theme_dark')}</option>
+                <option value="simple">{t('theme_simple')}</option>
+                <option value="compact">{t('theme_compact')}</option>
+                <option value="flat">{t('theme_flat')}</option>
+                <option value="accessibility">{t('theme_high_contrast')}</option>
               </select>
             </div>
 
             <div className="setting-item">
-              <label>缩放比例</label>
+              <label>{t('zoom')}</label>
               <select
                 value={menu.zoom || 100}
                 onChange={(e) => handleZoomChange(Number(e.target.value))}
@@ -109,7 +172,7 @@ export default function SettingsPage({ onClose }: SettingsPageProps) {
               </select>
             </div>
 
-            <h3>功能</h3>
+            <h3>{t('features')}</h3>
 
             <div className="setting-item">
               <label>
@@ -118,10 +181,10 @@ export default function SettingsPage({ onClose }: SettingsPageProps) {
                   checked={menu.autofill || false}
                   onChange={(e) => dispatch({ type: 'setAutofill', payload: e.target.checked })}
                 />
-                <span>启用自动填充</span>
+                <span>{t('enable_autofill')}</span>
               </label>
               <p className="setting-description">
-                自动检测并填充网页中的验证码输入框
+                {t('autofill_description')}
               </p>
             </div>
 
@@ -132,10 +195,10 @@ export default function SettingsPage({ onClose }: SettingsPageProps) {
                   checked={menu.smartFilter || false}
                   onChange={(e) => dispatch({ type: 'setSmartFilter', payload: e.target.checked })}
                 />
-                <span>智能筛选</span>
+                <span>{t('smart_filter')}</span>
               </label>
               <p className="setting-description">
-                根据当前网页自动显示相关账户
+                {t('smart_filter_description')}
               </p>
             </div>
 
@@ -146,10 +209,10 @@ export default function SettingsPage({ onClose }: SettingsPageProps) {
                   checked={menu.enableContextMenu || false}
                   onChange={(e) => dispatch({ type: 'setEnableContextMenu', payload: e.target.checked })}
                 />
-                <span>启用右键菜单</span>
+                <span>{t('enable_context_menu')}</span>
               </label>
               <p className="setting-description">
-                在网页上右键快速访问验证码
+                {t('context_menu_description')}
               </p>
             </div>
           </div>
@@ -157,53 +220,77 @@ export default function SettingsPage({ onClose }: SettingsPageProps) {
 
         {activeSection === 'security' && (
           <div className="settings-section">
-            <h3>密码保护</h3>
+            <h3>{t('password_protection')}</h3>
 
             <div className="setting-item">
-              <label>自动锁定</label>
+              {hasPassword ? (
+                <>
+                  <div className="password-status">
+                    <LockIcon />
+                    <span>{t('encrypted')}</span>
+                  </div>
+                  <button className="btn-secondary" onClick={() => setShowPasswordSetup(true)}>
+                    {t('update')} {t('phrase')}
+                  </button>
+                </>
+              ) : (
+                <>
+                  <button className="btn-primary" onClick={() => setShowPasswordSetup(true)}>
+                    {t('set_password')}
+                  </button>
+                  <p className="setting-description">
+                    {t('security_warning')}
+                  </p>
+                </>
+              )}
+            </div>
+
+            <div className="setting-item">
+              <label>{t('auto_lock')}</label>
               <select
                 value={menu.autolock || 0}
                 onChange={(e) => handleAutoLockChange(Number(e.target.value))}
+                disabled={!hasPassword}
               >
-                <option value={0}>禁用</option>
-                <option value={1}>1 分钟</option>
-                <option value={5}>5 分钟</option>
-                <option value={10}>10 分钟</option>
-                <option value={30}>30 分钟</option>
-                <option value={60}>1 小时</option>
+                <option value={0}>{t('disabled')}</option>
+                <option value={1}>1 {t('minute')}</option>
+                <option value={5}>5 {t('minutes')}</option>
+                <option value={10}>10 {t('minutes')}</option>
+                <option value={30}>30 {t('minutes')}</option>
+                <option value={60}>1 {t('hour')}</option>
               </select>
               <p className="setting-description">
-                闲置指定时间后自动锁定，需重新输入主密码
+                {t('auto_lock_description')}
               </p>
             </div>
+
+            <h3>{t('privacy')}</h3>
 
             <div className="setting-item">
               <button className="btn-secondary" onClick={handleResetPassword}>
-                重置主密码
+                {t('reset_password')}
               </button>
               <p className="setting-description warning">
-                ⚠️ 重置密码将清除所有账户数据，请先导出备份
+                {t('reset_password_warning')}
               </p>
             </div>
 
-            <h3>隐私</h3>
-
             <div className="setting-item">
               <button
-                className="btn-secondary"
+                className="btn-danger"
                 onClick={() => {
-                  if (confirm('确定要清除所有数据吗？此操作不可恢复！')) {
+                  if (confirm(t('clear_all_data_confirm'))) {
                     chrome.storage.local.clear(() => {
-                      alert('所有数据已清除');
+                      alert(t('all_data_cleared'));
                       window.location.reload();
                     });
                   }
                 }}
               >
-                清除所有数据
+                {t('clear_all_data')}
               </button>
               <p className="setting-description warning">
-                ⚠️ 永久删除所有账户和设置数据
+                {t('clear_all_data_warning')}
               </p>
             </div>
           </div>
@@ -211,46 +298,52 @@ export default function SettingsPage({ onClose }: SettingsPageProps) {
 
         {activeSection === 'backup' && (
           <div className="settings-section">
-            <h3>备份与恢复</h3>
+            <h3>{t('backup_restore')}</h3>
 
             <div className="setting-item">
               <button
-                className="btn-primary btn-full"
+                className="btn-primary"
                 onClick={() => setShowImportExport(true)}
+                style={{ width: '100%' }}
               >
-                📦 管理备份
+                <BackupIcon />
+                {t('manage_backups')}
               </button>
               <p className="setting-description">
-                导出或导入您的账户数据
+                {t('backup_description')}
               </p>
             </div>
+          </div>
+        )}
 
-            <h3>关于</h3>
+        {activeSection === 'about' && (
+          <div className="settings-section">
+            <h3>{t('about')}</h3>
 
             <div className="about-info">
               <div className="info-row">
-                <span>版本</span>
+                <span>{t('version')}</span>
                 <span>1.0.0</span>
               </div>
               <div className="info-row">
-                <span>开发者</span>
+                <span>{t('developer')}</span>
                 <span>Auths Team</span>
               </div>
               <div className="info-row">
-                <span>许可证</span>
+                <span>{t('license')}</span>
                 <span>MIT</span>
               </div>
             </div>
 
             <div className="links">
-              <a href="https://github.com/your-repo/auths" target="_blank" rel="noopener noreferrer">
-                GitHub
+              <a href="https://github.com/aspect-apps/auths" target="_blank" rel="noopener noreferrer">
+                {t('github')}
               </a>
-              <a href="https://github.com/your-repo/auths/issues" target="_blank" rel="noopener noreferrer">
-                反馈问题
+              <a href="https://github.com/aspect-apps/auths/issues" target="_blank" rel="noopener noreferrer">
+                {t('report_issue')}
               </a>
-              <a href="https://github.com/your-repo/auths/blob/main/README.md" target="_blank" rel="noopener noreferrer">
-                使用帮助
+              <a href="https://github.com/aspect-apps/auths/blob/main/README.md" target="_blank" rel="noopener noreferrer">
+                {t('help')}
               </a>
             </div>
           </div>
@@ -261,6 +354,17 @@ export default function SettingsPage({ onClose }: SettingsPageProps) {
         <div className="modal-overlay" onClick={() => setShowImportExport(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
             <ImportExport onClose={() => setShowImportExport(false)} />
+          </div>
+        </div>
+      )}
+
+      {showPasswordSetup && (
+        <div className="modal-overlay" onClick={() => setShowPasswordSetup(false)}>
+          <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+            <PasswordSetup
+              onSetPassword={handleSetPassword}
+              onCancel={() => setShowPasswordSetup(false)}
+            />
           </div>
         </div>
       )}

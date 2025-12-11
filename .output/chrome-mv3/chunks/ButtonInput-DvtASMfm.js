@@ -1,0 +1,1 @@
+import{j as m}from"./StoreContext-BOHAeAKL.js";function e({type:t,children:s,onClick:n,className:o="",disabled:u=!1,title:a}){const l=t==="small"?"button-small":"button";return m.jsx("button",{className:`${l} ${o}`,onClick:n,disabled:u,title:a,children:s})}export{e as B};

@@ -15,13 +15,15 @@ export interface StyleState {
   qrfadeout: boolean;
 }
 
-export type StyleAction = 
+export type StyleAction =
   | { type: 'showInfo' }
   | { type: 'hideInfo' }
   | { type: 'setInfo'; payload: boolean }
   | { type: 'showMenu' }
   | { type: 'hideMenu' }
-  | { type: 'setMenuShown'; payload: boolean };
+  | { type: 'setMenuShown'; payload: boolean }
+  | { type: 'startEdit' }
+  | { type: 'stopEdit' };
 
 const initialState: StyleState = {
   info: false,
@@ -76,7 +78,19 @@ export function styleReducer(state = initialState, action: StyleAction): StyleSt
         ...state,
         menuShown: action.payload
       };
-    
+
+    case 'startEdit':
+      return {
+        ...state,
+        isEditing: true
+      };
+
+    case 'stopEdit':
+      return {
+        ...state,
+        isEditing: false
+      };
+
     default:
       return state;
   }

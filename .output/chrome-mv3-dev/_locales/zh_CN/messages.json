@@ -835,5 +835,14 @@
   },
   "qr_error_connection_failed": {
     "message": "无法连接到页面，请刷新页面后重试。"
+  },
+  "account_already_exists": {
+    "message": "该账户已存在，请勿重复添加。"
+  },
+  "edit_account": {
+    "message": "编辑账户"
+  },
+  "save": {
+    "message": "保存"
   }
 }

@@ -233,10 +233,13 @@ export default function QRScanner({ onClose, onSuccess, initialMode }: QRScanner
 
   // Process image and detect QR code
   const processImage = async (dataUrl: string): Promise<void> => {
+    console.log('[QRScanner] processImage called');
     return new Promise((resolve, reject) => {
       const img = new Image();
       img.onload = () => {
+        console.log('[QRScanner] Image loaded, dimensions:', img.width, 'x', img.height);
         if (!canvasRef.current) {
+          console.error('[QRScanner] Canvas ref is null');
           reject(new Error(t('qr_error_canvas_unavailable')));
           return;
         }
@@ -244,6 +247,7 @@ export default function QRScanner({ onClose, onSuccess, initialMode }: QRScanner
         const canvas = canvasRef.current;
         const context = canvas.getContext('2d');
         if (!context) {
+          console.error('[QRScanner] Cannot get 2d context');
           reject(new Error(t('qr_error_canvas_unavailable')));
           return;
         }
@@ -253,18 +257,25 @@ export default function QRScanner({ onClose, onSuccess, initialMode }: QRScanner
         context.drawImage(img, 0, 0);
 
         const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        console.log('[QRScanner] Calling jsQR with imageData:', imageData.width, 'x', imageData.height);
+
         const code = jsQR(imageData.data, imageData.width, imageData.height, {
           inversionAttempts: 'dontInvert',
         });
+
+        console.log('[QRScanner] jsQR result:', code ? 'QR found: ' + code.data : 'No QR found');
 
         if (code) {
           handleQRCodeDetected(code.data);
           resolve();
         } else {
           // Try with inverted colors
+          console.log('[QRScanner] Trying with inverted colors...');
           const invertedCode = jsQR(imageData.data, imageData.width, imageData.height, {
             inversionAttempts: 'attemptBoth',
           });
+
+          console.log('[QRScanner] Inverted jsQR result:', invertedCode ? 'QR found: ' + invertedCode.data : 'No QR found');
 
           if (invertedCode) {
             handleQRCodeDetected(invertedCode.data);
@@ -276,7 +287,8 @@ export default function QRScanner({ onClose, onSuccess, initialMode }: QRScanner
         }
       };
 
-      img.onerror = () => {
+      img.onerror = (err) => {
+        console.error('[QRScanner] Image load error:', err);
         reject(new Error(t('qr_error_image_load_failed')));
       };
 
@@ -286,14 +298,20 @@ export default function QRScanner({ onClose, onSuccess, initialMode }: QRScanner
 
   // Handle file upload
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log('[QRScanner] handleFileUpload triggered');
     const file = e.target.files?.[0];
-    if (!file) return;
+    if (!file) {
+      console.log('[QRScanner] No file selected');
+      return;
+    }
 
+    console.log('[QRScanner] File selected:', file.name, file.type, file.size);
     setError('');
     setLoading(true);
 
     // Validate file type
     if (!file.type.startsWith('image/')) {
+      console.log('[QRScanner] Invalid file type:', file.type);
       setError(t('qr_error_not_image'));
       setLoading(false);
       return;
@@ -301,6 +319,7 @@ export default function QRScanner({ onClose, onSuccess, initialMode }: QRScanner
 
     // Validate file size (max 10MB)
     if (file.size > 10 * 1024 * 1024) {
+      console.log('[QRScanner] File too large:', file.size);
       setError(t('qr_error_file_too_large'));
       setLoading(false);
       return;
@@ -310,20 +329,29 @@ export default function QRScanner({ onClose, onSuccess, initialMode }: QRScanner
       const reader = new FileReader();
 
       reader.onload = async (event) => {
+        console.log('[QRScanner] FileReader onload');
         const dataUrl = event.target?.result as string;
         if (dataUrl) {
-          await processImage(dataUrl);
+          console.log('[QRScanner] Processing image, dataUrl length:', dataUrl.length);
+          try {
+            await processImage(dataUrl);
+          } catch (err) {
+            console.error('[QRScanner] processImage error:', err);
+            setError(err instanceof Error ? err.message : t('qr_error_unknown'));
+          }
         }
         setLoading(false);
       };
 
-      reader.onerror = () => {
+      reader.onerror = (err) => {
+        console.error('[QRScanner] FileReader error:', err);
         setError(t('qr_error_file_read_failed'));
         setLoading(false);
       };
 
       reader.readAsDataURL(file);
     } catch (err) {
+      console.error('[QRScanner] Exception:', err);
       setError(t('qr_error_file_read_failed'));
       setLoading(false);
     }

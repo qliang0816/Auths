@@ -489,6 +489,11 @@ body {
       background: var(--color-warning-light);
       color: var(--color-warning);
     }
+
+    &.edit-btn:hover {
+      background: var(--color-primary-light);
+      color: var(--color-primary);
+    }
   }
 }
 

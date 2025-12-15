@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useAccounts, useStyle } from '../../store';
 import { useI18n } from '../../i18n';
 import { KeyUtilities } from '../../models/key-utilities';
+import { OTPType, OTPAlgorithm } from '../../models/otp';
 
 // SVG Icons
 const PinIcon = () => (
@@ -26,6 +27,13 @@ const CheckIcon = () => (
   </svg>
 );
 
+const EditIcon = () => (
+  <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M11 4H4C3.44772 4 3 4.44772 3 5V20C3 20.5523 3.44772 21 4 21H19C19.5523 21 20 20.5523 20 20V13" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+    <path d="M18.5 2.5C19.3284 1.67157 20.6716 1.67157 21.5 2.5C22.3284 3.32843 22.3284 4.67157 21.5 5.5L12 15L8 16L9 12L18.5 2.5Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+  </svg>
+);
+
 // Use OTPEntryInterface from global declarations
 declare global {
   interface OTPEntryInterface {
@@ -47,6 +55,7 @@ interface EntryComponentProps {
   filtered?: boolean;
   notSearched?: boolean;
   tabindex?: number;
+  onEdit?: (entry: OTPEntryInterface) => void;
 }
 
 // Format code with space in the middle (e.g., "123 456")
@@ -60,7 +69,8 @@ export default function EntryComponent({
   entry,
   filtered = false,
   notSearched = false,
-  tabindex = -1
+  tabindex = -1,
+  onEdit
 }: EntryComponentProps) {
   const { dispatch } = useAccounts();
   const { style } = useStyle();
@@ -73,18 +83,34 @@ export default function EntryComponent({
   // Generate TOTP code
   useEffect(() => {
     const generateCode = () => {
-      if (!entry.secret || entry.type !== 1) {
-        setCode(entry.code);
+      if (!entry.secret || typeof entry.secret !== 'string') {
+        setCode(entry.code || '------');
+        return;
+      }
+
+      // HOTP (type 2) doesn't auto-generate
+      if (entry.type === 2) {
+        setCode(entry.code || '------');
         return;
       }
 
       try {
-        const now = Math.floor(Date.now() / 1000);
-        const epoch = Math.floor(now / entry.period);
+        // Map entry.type to OTPType enum
+        const otpType = entry.type === 1 ? OTPType.totp :
+                        entry.type === 2 ? OTPType.hotp : OTPType.totp;
+
+        // Map algorithm number to OTPAlgorithm enum
+        const algorithm = entry.algorithm === 2 ? OTPAlgorithm.SHA256 :
+                          entry.algorithm === 3 ? OTPAlgorithm.SHA512 : OTPAlgorithm.SHA1;
+
         const newCode = KeyUtilities.generate(
+          otpType,
           entry.secret,
-          epoch,
-          entry.digits || 6
+          entry.counter || 0,
+          entry.period || 30,
+          entry.digits || 6,
+          algorithm,
+          0 // clock offset
         );
         setCode(newCode);
       } catch (err) {
@@ -95,10 +121,12 @@ export default function EntryComponent({
 
     generateCode();
 
-    // Update code when period changes
-    const interval = setInterval(generateCode, 1000);
-    return () => clearInterval(interval);
-  }, [entry.secret, entry.period, entry.digits, entry.type]);
+    // Update code every second for TOTP
+    if (entry.type === 1) {
+      const interval = setInterval(generateCode, 1000);
+      return () => clearInterval(interval);
+    }
+  }, [entry.secret, entry.period, entry.digits, entry.type, entry.algorithm, entry.counter]);
 
   // Update progress and time left
   useEffect(() => {
@@ -142,6 +170,14 @@ export default function EntryComponent({
     }
   };
 
+  const handleEdit = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    console.log('[EntryComponent] handleEdit clicked, entry:', entry.issuer, 'onEdit:', !!onEdit);
+    if (onEdit) {
+      onEdit(entry);
+    }
+  };
+
   const isHOTP = entry.type === 2;
   const isEncrypted = entry.secret === null;
   const isLowTime = timeLeft <= 5 && entry.type === 1;
@@ -177,6 +213,14 @@ export default function EntryComponent({
         {/* Edit Mode Actions */}
         {style.isEditing && (
           <div className="entry-actions" style={{ opacity: 1 }}>
+            <button
+              className="action-btn edit-btn"
+              onClick={handleEdit}
+              title={t('edit')}
+              aria-label={t('edit')}
+            >
+              <EditIcon />
+            </button>
             <button
               className="action-btn pin-btn"
               onClick={handlePin}

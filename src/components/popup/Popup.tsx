@@ -1,21 +1,49 @@
 import React, { useState, useEffect } from 'react';
-import { useStyle, useMenu, useNotification } from '../../store';
+import { useStyle, useMenu, useNotification, useAccounts } from '../../store';
 import { useI18n } from '../../i18n';
 import MainHeader from './MainHeader';
 import MainBody from './MainBody';
 import Settings from './Settings';
 import PasswordUnlock from './PasswordUnlock';
+import './Notification.css';
 
 export default function Popup() {
   const { style } = useStyle();
   const { menu } = useMenu();
-  const { notification } = useNotification();
+  const { notification, dispatch: notificationDispatch } = useNotification();
+  const { dispatch: accountsDispatch } = useAccounts();
   const { t } = useI18n();
   const [hideoutline, setHideoutline] = useState(true);
   const [showSettings, setShowSettings] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
   const [unlockAttempts, setUnlockAttempts] = useState(0);
   const [lastActivity, setLastActivity] = useState(Date.now());
+
+  // Auto-clear notification after 3 seconds
+  useEffect(() => {
+    if (notification.message) {
+      const timer = setTimeout(() => {
+        notificationDispatch({ type: 'clear' });
+      }, 3000);
+      return () => clearTimeout(timer);
+    }
+  }, [notification.message]);
+
+  // Load entries from storage on mount
+  useEffect(() => {
+    const loadEntries = async () => {
+      try {
+        const result = await chrome.storage.local.get(['entries']);
+        if (result.entries && Array.isArray(result.entries)) {
+          console.log('[Popup] Loaded entries from storage:', result.entries.length);
+          accountsDispatch({ type: 'setEntries', payload: result.entries });
+        }
+      } catch (err) {
+        console.error('[Popup] Failed to load entries:', err);
+      }
+    };
+    loadEntries();
+  }, []);
 
   // Check if locked on mount
   useEffect(() => {

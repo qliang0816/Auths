@@ -21,8 +21,10 @@ export type AccountsAction =
   | { type: 'setDefaultEncryption'; payload: string }
   | { type: 'setEncryption'; payload: any }
   | { type: 'showNotification' }
-  | { type: 'pinEntry'; payload: any }
-  | { type: 'deleteCode'; payload: string };
+  | { type: 'pinEntry'; payload: string }
+  | { type: 'deleteCode'; payload: string }
+  | { type: 'addCode'; payload: any }
+  | { type: 'updateEntry'; payload: { hash: string; issuer?: string; account?: string; period?: number; digits?: number } };
 
 const initialState: AccountsState = {
   entries: [],
@@ -104,23 +106,74 @@ export function accountsReducer(state = initialState, action: AccountsAction): A
       return state;
     
     case 'pinEntry':
+      const pinnedEntries = state.entries.map(entry =>
+        entry.hash === action.payload
+          ? { ...entry, pinned: !entry.pinned }
+          : entry
+      );
+      saveEntriesToStorage(pinnedEntries);
       return {
         ...state,
-        entries: state.entries.map(entry =>
-          entry.hash === action.payload.hash
-            ? { ...entry, pinned: !entry.pinned }
-            : entry
-        )
+        entries: pinnedEntries
       };
-    
+
     case 'deleteCode':
+      const filteredEntries = state.entries.filter(entry => entry.hash !== action.payload);
+      // 保存到 storage
+      saveEntriesToStorage(filteredEntries);
       return {
         ...state,
-        entries: state.entries.filter(entry => entry.hash !== action.payload)
+        entries: filteredEntries
       };
-    
+
+    case 'addCode':
+      // 生成唯一 hash
+      const newEntry = {
+        ...action.payload,
+        hash: action.payload.hash || generateHash(),
+        pinned: false,
+        code: '',
+      };
+      const newEntries = [...state.entries, newEntry];
+      // 保存到 storage
+      saveEntriesToStorage(newEntries);
+      return {
+        ...state,
+        entries: newEntries
+      };
+
+    case 'updateEntry':
+      const updatedEntries = state.entries.map(entry =>
+        entry.hash === action.payload.hash
+          ? {
+              ...entry,
+              issuer: action.payload.issuer !== undefined ? action.payload.issuer : entry.issuer,
+              account: action.payload.account !== undefined ? action.payload.account : entry.account,
+              period: action.payload.period !== undefined ? action.payload.period : entry.period,
+              digits: action.payload.digits !== undefined ? action.payload.digits : entry.digits,
+            }
+          : entry
+      );
+      saveEntriesToStorage(updatedEntries);
+      return {
+        ...state,
+        entries: updatedEntries
+      };
+
     default:
       return state;
+  }
+}
+
+// 生成唯一 hash
+function generateHash(): string {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2);
+}
+
+// 保存 entries 到 chrome.storage
+function saveEntriesToStorage(entries: any[]) {
+  if (typeof chrome !== 'undefined' && chrome.storage) {
+    chrome.storage.local.set({ entries });
   }
 }
 
